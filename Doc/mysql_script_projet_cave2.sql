@@ -14,13 +14,13 @@ create table categories (id_categorie int auto_increment primary key,
 
 
 create table alcools (id_alcool int auto_increment primary key,
-					  class_name varchar(50),
+					  class_name varchar(80),
 					  designation varchar(100),
                       description varchar(500),
                       prix double,
                       quantité int,
                       selectionne boolean,
-                      photo blob,
+                      photo varchar(150),
                       promo double,
                       annee int);
                
@@ -79,7 +79,7 @@ insert into alcools_categories values (1,1), (1,2), (1,3), (1,4), (1,5);
 
 #pour recupérer le produit et la liste des catégories
 select * from alcools where id_alcool=1;
-select * from categories inner join alcools_categories on id_categorie=categorie_id where alcool_id=1;
+select * from categories inner join alcools_categories on id_categorie=categorie_id where alcool_id=2;
 
 #nouvelle commande
 insert into commandes() values ();
@@ -87,3 +87,7 @@ insert into lignes_commandes (alcool_id, commande_id, quantite, prix) values (1,
 
 #panier
 select designation, alcools.prix, quantite, lignes_commandes.prix  from alcools inner join lignes_commandes on id_alcool = alcool_id where commande_id=1;
+
+select * from alcools;
+select * from categories;
+SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=2;

@@ -32,18 +32,18 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		try {
 			ps1 = this.connection.prepareStatement("INSERT INTO alcools (class_name, designation, description, prix, quantité, photo, annee) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			
-			ps1.setString(1, pAlcool.getClass().getName());
+			ps1.setString(1, pAlcool.getClass().getSimpleName());
 			ps1.setString(2, pAlcool.getDesignation());
 			ps1.setString(3, pAlcool.getDescription());
 			ps1.setDouble(4, pAlcool.getPrix());
 			ps1.setInt(5, pAlcool.getQuantite());
-			ps1.setBytes(6, pAlcool.getPhoto());
+			ps1.setString(6, pAlcool.getPhoto());
 			if (pAlcool instanceof Vin) {
-				ps1.setInt(6, ((Vin)pAlcool).getAnnee());
+				ps1.setInt(7, ((Vin)pAlcool).getAnnee());
 			} else if (pAlcool instanceof Champagne) {
-				ps1.setInt(6, ((Champagne)pAlcool).getAnnee());
+				ps1.setInt(7, ((Champagne)pAlcool).getAnnee());
 			} else {
-				ps1.setInt(6, 0);
+				ps1.setInt(7, 0);
 			}
 			
 			
@@ -74,7 +74,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				ps3.setInt(4, ((Spiritueux) pAlcool).getType().getIdCategorie());
 				
 			} else if (pAlcool instanceof Vin) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?), (?,?), (?,?)");
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?), (?,?)");
 				
 				ps3.setInt(1, idAlcool);
 				ps3.setInt(2, ((Vin) pAlcool).getPays().getIdCategorie());
@@ -148,7 +148,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			ps1.setString(3, pAlcool.getDescription());
 			ps1.setDouble(4, pAlcool.getPrix());
 			ps1.setInt(5, pAlcool.getQuantite());
-			ps1.setBytes(6, pAlcool.getPhoto());
+			ps1.setString(6, pAlcool.getPhoto());
 			if (pAlcool instanceof Vin) {
 				ps1.setInt(6, ((Vin) pAlcool).getAnnee());
 			} else if (pAlcool instanceof Champagne) {
@@ -285,15 +285,10 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		try {
 			
 			ps = this.connection.prepareStatement("SELECT * FROM alcools WHERE id_alcool=?");
-			
 			ps.setInt(1, pIdAlcool);
 			
-			rs = ps.executeQuery();
-			
-			rs.next();
 			
 			ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
-			
 			ps2.setInt(1, pIdAlcool);
 			
 			rs2 = ps2.executeQuery();
@@ -303,20 +298,25 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			CatRegion region = null;
 			List<CatCepage> listeCepages = new ArrayList<>();
 			
+			
 			while (rs2.next()) {
-				if (rs2.getString(2) == "CatPays") {
+				
+				if (rs2.getString(2).equals("CatPays")) {
 					pays = new CatPays(rs2.getInt(1), rs2.getString(3));
 				}
-				if (rs2.getString(2) == "CatPays") {
-					pays = new CatPays(rs2.getInt(1), rs2.getString(3));
+				if (rs2.getString(2).equals("CatRegion")) {
+					region = new CatRegion(rs2.getInt(1), rs2.getString(3));
 				}
-				if (rs2.getString(2) == "CatType") {
+				if (rs2.getString(2).equals("CatType")) {
 					type = new CatType(rs2.getInt(1), rs2.getString(3), rs2.getString(4));
 				}
-				if (rs2.getString(2) == "CatCepage") {
+				if (rs2.getString(2).equals("CatCepage")) {
 					listeCepages.add(new CatCepage(rs2.getInt(1), rs2.getString(3)));
 				}
 			}//end while - commun
+			
+			rs = ps.executeQuery();
+			rs.next();
 			
 			int id = rs.getInt(1);
 			String classe = rs.getString(2);
@@ -325,27 +325,26 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			int prix = rs.getInt(5);
 			int quantite = rs.getInt(6);
 			boolean selectionne = rs.getBoolean(7);
-			byte[] photo = rs.getBytes(8);
+			String photo = rs.getString(8);
 			double promo = rs.getDouble(9);
-			
 			//fin attributs communs
 			
-			if (classe == "Biere") {
+			if (rs.getString(2).equals("Biere")) {
 				
 				return new Biere(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, type);
 				
-			} /*end if biere*/ else if (classe == "Spiritueux") {
+			} /*end if biere*/ else if (rs.getString(2).equals("Spiritueux")) {
 				
 				return new Spiritueux(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, type);
 				
-			} /*end if spiritueux*/ else if (classe == "Champagne") {
+			} /*end if spiritueux*/ else if (rs.getString(2).equals("Champagne")) {
 				
 				int annee = rs.getInt(10);
 				
 				return new Champagne(id, classe, nom, description, prix, quantite, selectionne, photo, promo, type, listeCepages, annee);
 				
-			} /*end if champagne*/ else if (classe == "Vin") {
-				
+			} /*end if champagne*/ else if (rs.getString(2).equals("Vin")) {
+				System.out.println("ok8");
 				int annee = rs.getInt(10);
 				
 				return new Vin(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, region, type, listeCepages, annee);
@@ -419,16 +418,16 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			List<CatCepage> listeCepages = new ArrayList<>();
 			
 			while (rs2.next()) {
-				if (rs2.getString(2) == "CatPays") {
+				if (rs2.getString(2).equals("CatPays")) {
 					pays = new CatPays(rs2.getInt(1), rs2.getString(3));
 				}
-				if (rs2.getString(2) == "CatRegion") {
+				if (rs2.getString(2).equals("CatRegion")) {
 					region = new CatRegion(rs2.getInt(1), rs2.getString(3));
 				}
-				if (rs2.getString(2) == "CatType") {
+				if (rs2.getString(2).equals("CatType")) {
 					type = new CatType(rs2.getInt(1), rs2.getString(3), rs2.getString(4));
 				}
-				if (rs2.getString(2) == "CatCepage") {
+				if (rs2.getString(2).equals("CatCepage")) {
 					listeCepages.add(new CatCepage(rs2.getInt(1), rs2.getString(3)));
 				}
 			}//end while - commun
@@ -439,26 +438,26 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			int prix = rs.getInt(5);
 			int quantite = rs.getInt(6);
 			boolean selectionne = rs.getBoolean(7);
-			byte[] photo = rs.getBytes(8);
+			String photo = rs.getString(8);
 			double promo = rs.getDouble(9);
 			
 			//fin attributs communs
 			
-			if (rs.getString(2) == "Biere") {
+			if (rs.getString(2).equals("Biere")) {
 				
 				return new Biere(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, type);
 				
-			} /*end if biere*/ else if (rs.getString(2) == "Spiritueux") {
+			} /*end if biere*/ else if (rs.getString(2).equals("Spiritueux")) {
 				
 				return new Spiritueux(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, type);
 				
-			} /*end if spiritueux*/ else if (rs.getString(2) == "Champagne") {
+			} /*end if spiritueux*/ else if (rs.getString(2).equals("Champagne")) {
 				
 				int annee = rs.getInt(10);
 				
 				return new Champagne(id, classe, nom, description, prix, quantite, selectionne, photo, promo, type, listeCepages, annee);
 				
-			} /*end if champagne*/ else if (rs.getString(2) == "Vin") {
+			} /*end if champagne*/ else if (rs.getString(2).equals("Vin")) {
 				
 				int annee = rs.getInt(10);
 				
@@ -513,6 +512,8 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			
 			preSta.setInt(1, pIdAlcool);
 			
+			resSet = preSta.executeQuery();
+			
 			CatCepage cepage = null;
 			List<CatCepage> listeCepages = new ArrayList<>();
 			
@@ -523,7 +524,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				listeCepages.add(cepage);
 				
 			}//end while
-			
+			return listeCepages;
 			
 		} catch (SQLException e) {
 			System.out.println("... Erreur lors de la récupération de la liste des cépages / méthode getAllCepageByAlcool() ...");
@@ -562,6 +563,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				ps.setInt(1, pIdAlcool);
 				ps.setInt(2, cepageI.getIdCategorie());
 				
+				ps.executeUpdate();
 			}
 			
 		} catch (SQLException e) {
@@ -617,7 +619,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				int prix = rs.getInt(5);
 				int quantite = rs.getInt(6);
 				boolean selectionne = rs.getBoolean(7);
-				byte[] photo = rs.getBytes(8);
+				String photo = rs.getString(8);
 				double promo = rs.getDouble(9);
 				int annee = rs.getInt(10);
 				
@@ -627,16 +629,16 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				
 				while (rs2.next()) {
 					
-					if (rs2.getString(2) == "CatPays") {
+					if (rs2.getString(2).equals("CatPays")) {
 						pays = new CatPays(rs2.getInt(1), rs2.getString(3));
 					}
-					if (rs2.getString(2) == "CatRegion") {
+					if (rs2.getString(2).equals("CatRegion")) {
 						region = new CatRegion(rs2.getInt(1), rs2.getString(3));
 					}
-					if (rs2.getString(2) == "CatType") {
+					if (rs2.getString(2).equals("CatType")) {
 						type = new CatType(rs2.getInt(1), rs2.getString(3), rs2.getString(4));
 					}
-					if (rs2.getString(2) == "CatCepage") {
+					if (rs2.getString(2).equals("CatCepage")) {
 						listeCepages.add(new CatCepage(rs2.getInt(1), rs2.getString(3)));
 					}
 					
@@ -712,7 +714,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				int prix = rs.getInt(5);
 				int quantite = rs.getInt(6);
 				boolean selectionne = rs.getBoolean(7);
-				byte[] photo = rs.getBytes(8);
+				String photo = rs.getString(8);
 				double promo = rs.getDouble(9);
 				int annee = rs.getInt(10);
 				
@@ -722,10 +724,10 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				
 				while (rs2.next()) {
 					
-					if (rs2.getString(2) == "CatType") {
+					if (rs2.getString(2).equals("CatType")){
 						type = new CatType(rs2.getInt(1), rs2.getString(3), rs2.getString(4));
 					}
-					if (rs2.getString(2) == "CatCepage") {
+					if (rs2.getString(2).equals("CatCepage")) {
 						listeCepages.add(new CatCepage(rs2.getInt(1), rs2.getString(3)));
 					}
 					
@@ -801,7 +803,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				int prix = rs.getInt(5);
 				int quantite = rs.getInt(6);
 				boolean selectionne = rs.getBoolean(7);
-				byte[] photo = rs.getBytes(8);
+				String photo = rs.getString(8);
 				double promo = rs.getDouble(9);
 				
 				ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
@@ -810,10 +812,10 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				
 				while (rs2.next()) {
 					
-					if (rs2.getString(2) == "CatPays") {
+					if (rs2.getString(2).equals("CatPays")) {
 						pays = new CatPays(rs2.getInt(1), rs2.getString(3));
 					}
-					if (rs2.getString(2) == "CatType") {
+					if (rs2.getString(2).equals("CatType")) {
 						type = new CatType(rs2.getInt(1), rs2.getString(3), rs2.getString(4));
 					}
 					
@@ -889,7 +891,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				int prix = rs.getInt(5);
 				int quantite = rs.getInt(6);
 				boolean selectionne = rs.getBoolean(7);
-				byte[] photo = rs.getBytes(8);
+				String photo = rs.getString(8);
 				double promo = rs.getDouble(9);
 				
 				ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
@@ -898,10 +900,10 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				
 				while (rs2.next()) {
 					
-					if (rs2.getString(2) == "CatPays") {
+					if (rs2.getString(2).equals("CatPays")) {
 						pays = new CatPays(rs2.getInt(1), rs2.getString(3));
 					}
-					if (rs2.getString(2) == "CatType") {
+					if (rs2.getString(2).equals("CatType")) {
 						type = new CatType(rs2.getInt(1), rs2.getString(3), rs2.getString(4));
 					}
 					

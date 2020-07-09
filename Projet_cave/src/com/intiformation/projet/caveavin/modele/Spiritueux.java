@@ -18,14 +18,14 @@ public class Spiritueux extends Alcool {
 	}
 
 	public Spiritueux(int idProduit, String classe, String designation, String description, double prix, int quantite, boolean selectionne,
-			byte[] photo, double promo, CatPays pays, CatType type) {
+			String photo, double promo, CatPays pays, CatType type) {
 		super(idProduit, classe, designation, description, prix, quantite, selectionne, photo, promo);
 
 		this.pays = pays;
 		this.type = type;
 	}
 
-	public Spiritueux(String classe, String designation, String description, double prix, int quantite, byte[] photo, double promo, CatPays pays, CatType type) {
+	public Spiritueux(String classe, String designation, String description, double prix, int quantite, String photo, double promo, CatPays pays, CatType type) {
 		super(classe, designation, description, prix, quantite, photo, promo);
 
 		this.pays = pays;

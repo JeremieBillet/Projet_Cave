@@ -29,7 +29,7 @@ public class CategorieDAOImpl implements ICategorieDAO{
 			
 			ps = this.connection.prepareStatement("INSERT INTO categories (class_name, nom, photo) VALUES (?,?,?)");
 			
-			ps.setString(1, pCategorie.getClass().getName());
+			ps.setString(1, pCategorie.getClass().getSimpleName());
 			ps.setString(2, pCategorie.getNomObjetCat());
 			
 			if (pCategorie instanceof CatType) {
@@ -72,7 +72,7 @@ public class CategorieDAOImpl implements ICategorieDAO{
 			
 			ps = this.connection.prepareStatement("UPDATE categories SET class_name=? AND nom=? AND photo=? WHERE id_categorie=?");
 			
-			ps.setString(1, pCategorie.getClass().getName());
+			ps.setString(1, pCategorie.getClass().getSimpleName());
 			ps.setString(2, pCategorie.getNomObjetCat());
 			ps.setInt(4, pCategorie.getIdCategorie());
 			
@@ -198,19 +198,19 @@ public class CategorieDAOImpl implements ICategorieDAO{
 
 			rs.next();
 
-			if (rs.getString(2) == "CatPays") {
+			if (rs.getString(2).equals("CatPays")) {
 				
 				return new CatPays(rs.getInt(1), rs.getString(3)) ;
 				
-			}else if(rs.getString(2) == "CatRegion") {
+			}else if(rs.getString(2).equals("CatRegion")) {
 			
 				return new CatRegion(rs.getInt(1), rs.getString(3)) ;
 				
-			}else if(rs.getString(2) == "CatCepage") {
+			}else if(rs.getString(2).equals("CatCepage")) {
 			
 				return new CatCepage(rs.getInt(1), rs.getString(3)) ;
 				
-			}else if(rs.getString(2) == "CatType") {
+			}else if(rs.getString(2).equals("CatType")) {
 			
 				return new CatType(rs.getInt(1), rs.getString(3), rs.getString(4)) ;
 				
@@ -254,7 +254,7 @@ public class CategorieDAOImpl implements ICategorieDAO{
 			
 			rs.next();
 			
-			if (className == "CatPays") {
+			if (className.equals("CatPays")) {
 				
 				List<CatPays> listeCatPaysBDD = new ArrayList<>();
 				CatPays catPays = null;
@@ -263,7 +263,7 @@ public class CategorieDAOImpl implements ICategorieDAO{
 
 				listeCatPaysBDD.add(catPays);
 				
-			}else if (className == "CatRegion"){
+			}else if (className.equals("CatRegion")){
 				
 				List<CatRegion> listeCatRegionBDD = new ArrayList<>();
 				CatRegion catRegion = null;
@@ -272,7 +272,7 @@ public class CategorieDAOImpl implements ICategorieDAO{
 
 				listeCatRegionBDD.add(catRegion);
 				
-			}else if (className == "CatCepage"){
+			}else if (className.equals("CatCepage")){
 				
 				List<CatCepage> listeCatCepageBDD = new ArrayList<>();
 				CatCepage catCepage = null;
@@ -281,7 +281,7 @@ public class CategorieDAOImpl implements ICategorieDAO{
 
 				listeCatCepageBDD.add(catCepage);
 				
-			}else if (className == "CatType"){
+			}else if (className.equals("CatType")) {
 				
 				List<CatType> listeCatTypeBDD = new ArrayList<>();
 				CatType catType = null;

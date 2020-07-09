@@ -19,7 +19,7 @@ public class Champagne extends Alcool {
 	}
 
 	public Champagne(int idProduit, String classe, String designation, String description, double prix, int quantite,
-			boolean selectionne, byte[] photo, double promo, CatType type, List<CatCepage> cepage, int annee) {
+			boolean selectionne, String photo, double promo, CatType type, List<CatCepage> cepage, int annee) {
 		super(idProduit, classe, designation, description, prix, quantite, selectionne, photo, promo);
 		
 		this.type = type;
@@ -27,7 +27,7 @@ public class Champagne extends Alcool {
 		this.annee = annee;
 	}
 
-	public Champagne(String classe, String designation, String description, double prix, int quantite, byte[] photo, double promo, CatType type, List<CatCepage> cepage, int annee) {
+	public Champagne(String classe, String designation, String description, double prix, int quantite, String photo, double promo, CatType type, List<CatCepage> cepage, int annee) {
 		super(classe, designation, description, prix, quantite, photo, promo);
 
 		this.type = type;

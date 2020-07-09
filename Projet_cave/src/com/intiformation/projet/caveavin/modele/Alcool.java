@@ -10,7 +10,7 @@ public class Alcool {
 	private double prix;
 	private int quantite;
 	private boolean selectionne;
-	private byte[] photo;
+	private String photo;
 	private double promo;
 	
 	/*_______________________________ ctors _______________________________*/
@@ -30,7 +30,7 @@ public class Alcool {
 	 * @param photo
 	 * @param promo
 	 */
-	public Alcool(String classe, String designation, String description, double prix, int quantite, byte[] photo,
+	public Alcool(String classe, String designation, String description, double prix, int quantite, String photo,
 			double promo) {
 		super();
 		this.classe = classe;
@@ -46,7 +46,7 @@ public class Alcool {
 	 * ctor avec tous les attributs
 	 */
 	public Alcool(int idAlcool, String classe, String designation, String description, double prix, int quantite,
-			boolean selectionne, byte[] photo, double promo) {
+			boolean selectionne, String photo, double promo) {
 		super();
 		this.idAlcool = idAlcool;
 		this.classe = classe;
@@ -116,11 +116,11 @@ public class Alcool {
 		this.selectionne = selectionne;
 	}
 
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 

@@ -26,7 +26,7 @@ public class Vin extends Alcool {
 	}
 
 	public Vin(int idProduit, String classe, String designation, String description, double prix, int quantite, boolean selectionne,
-			byte[] photo, double promo, CatPays pays, CatRegion region, CatType type, List<CatCepage> cepage, int annee) {
+			String photo, double promo, CatPays pays, CatRegion region, CatType type, List<CatCepage> cepage, int annee) {
 		super(idProduit, classe, designation, description, prix, quantite, selectionne, photo, promo);
 
 		this.pays = pays;
@@ -36,7 +36,7 @@ public class Vin extends Alcool {
 		this.annee = annee;
 	}
 
-	public Vin(String classe, String designation, String description, double prix, int quantite, byte[] photo, double promo, CatPays pays, CatRegion region, CatType type, List<CatCepage> cepage, int annee) {
+	public Vin(String classe, String designation, String description, double prix, int quantite, String photo, double promo, CatPays pays, CatRegion region, CatType type, List<CatCepage> cepage, int annee) {
 		super(classe, designation, description, prix, quantite, photo, promo);
 
 		this.pays = pays;
