@@ -1,50 +1,31 @@
 package com.intiformation.projet.caveavin.modele;
 
 /**
- * modèle de données pour la catégorie 'Region' qui correspond à la table 'cat_regions' dans la bdd
+ * modèle de données pour la catégorie 'Region'
  * @author yannis
  *
  */
 
-public class CatRegion {
+public class CatRegion extends Categorie{
 
 	/*________________ PROPS _________________*/
 	
-	private int idRegion;
-	private String nomRegion;
 		
 	/*________________ CTORS _________________*/
 	
 	public CatRegion() {
 	}
 
-	public CatRegion(int idRegion, String nomRegion) {
-		this.idRegion = idRegion;
-		this.nomRegion = nomRegion;
+	public CatRegion(int idCategorie, String nomObjetCat) {
+		super(idCategorie, nomObjetCat);
 	}
 
-	public CatRegion(String nomRegion) {
-		this.nomRegion = nomRegion;
+	public CatRegion(String nomObjetCat) {
+		super(nomObjetCat);
 	}
 
 	/*________________ GETTER / SETTER _________________*/
 	
 
-	public int getIdRegion() {
-		return idRegion;
-	}
-
-	public void setIdRegion(int idRegion) {
-		this.idRegion = idRegion;
-	}
-
-	public String getNomRegion() {
-		return nomRegion;
-	}
-
-	public void setNomRegion(String nomRegion) {
-		this.nomRegion = nomRegion;
-	}
-	
 	
 }//end class
