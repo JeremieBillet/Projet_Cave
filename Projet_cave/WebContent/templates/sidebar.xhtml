@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+	<ui:composition>
+	
+		<b:flyOutMenu styleClass="sidebar">
+			<h4>Filtrer</h4>
+			<b:slider2 min="0" max="500" span="7" label="Prix"/>
+			<br/>
+			
+			<label class="control-label">Types</label>
+			<b:navLink value="Rouge" />
+			<b:navLink value="Blanc" />
+			<b:navLink value="Rosé" />
+			<br/>
+			<label class="control-label">Pays</label>
+			<b:navLink value="France" />
+			<b:navLink value="Espagne" />
+			<b:navLink value="Autralie" />
+			<b:navLink value="Italie" />
+		  
+		
+		</b:flyOutMenu>	
+		
+				
+	</ui:composition>
+	
+	
+	<!--  
+		<ul id="j_idt70" class="dropdown-menu" style="display: block; position: static; margin-bottom: 5px; *width: 50px">
+			<li id="j_idt72" style="cursor:pointer;">
+				<a href="#" role="menuitem" tabindex="0">Lunch <span><i class="glyphicon glyphicon-globe"></i></span></a>
+			</li>
+			<li id="j_idt75" class="  dropdown-submenu ">
+			<a id="dtLj_idt75" class="dropdown-submenu" href="#" role="button">Users</a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dtLj_idt75">
+					<li id="j_idt76" style="cursor:pointer;">
+						<a href="#" role="menuitem" tabindex="0">Register yourself</a>
+					</li>
+					-->
+				<!--  	
+				<h4>Filtrer</h4>
+				<div id="j_idt72" class="form-group ">
+					<div class="row slider2" style="magin-left : 20px;">
+						<div class="row "><div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+							<label for="j_idt72" class="control-label">Prix</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1 col-xs-1 col-sm-1 col-lg-1"><span id="j_idt72_badge" class="badge">250</span>
+						<input id="j_idt72" name="j_idt72" type="hidden" size="1" min="0" max="500" maxlength="3" class="form-control input-sm" value="250" />
+						</div>
+						<div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+						<input id="j_idt72_slider" data-slider-id="j_idt72_slider_id" data-slider-min="0.0" data-slider-max="500.0" data-slider-value="250.0" data-slider-step="1" data-slider-handle="round" data-slider-tooltip="show" data-slider-orientation="horizontal" data-slider-precision="0" data-slider-ticks-scale="linear" /></div></div></div></div><script>$(document).ready(function() {window.j_idt72_sv = new Slider('#j_idt72_slider', { }); $('#j_idt72_slider').on('slide', function(slideEvt) { $('#j_idt72').val(slideEvt.value); $('#j_idt72_badge').text(slideEvt.value); }); $('#j_idt72_slider').on('change', function() { $('#j_idt72').val($('#j_idt72_slider').val()); $('#j_idt72_badge').text($('#j_idt72_slider').val()); }); $('#j_idt72').keyup(function(event) {    var val = this.value;    if(typeof val === 'string') val = Number(val);    j_idt72_sv.setValue(val, true, true); }); });</script>
+				-->
+
+</body> 
+</html>
