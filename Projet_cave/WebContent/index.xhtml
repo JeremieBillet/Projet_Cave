@@ -68,6 +68,48 @@
 		</b:panel>
 		</h:link>
 	</ui:repeat>
+	<ui:repeat value="#{produitBean.listeChampagne}" var="bouteille">
+	
+		<h:link>
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.type.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:link>
+	</ui:repeat>
+	<ui:repeat value="#{produitBean.listeSpiriteux}" var="bouteille">
+	
+		<h:link>
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.type.nomObjetCat}, #{bouteille.pays.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:link>
+	</ui:repeat>
+	<ui:repeat value="#{produitBean.listeBiere}" var="bouteille">
+	
+		<h:link>
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.type.nomObjetCat}, #{bouteille.pays.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:link>
+	</ui:repeat>
 	</h:form>
 	
 	</div>

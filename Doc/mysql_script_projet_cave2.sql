@@ -148,14 +148,14 @@ insert into alcools_categories values (6,14), (6,22), (6,27);
 insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
 		values ('Champagne', 'Dom Pérignon', 
 				'Le Vintage 2008 Dom Pérignon se dévoile sur un nez éclatant, complexe et lumineux où l’on distingue des notes de fleurs blanches, d’agrumes et de fruits à noyaux. Des notes soulignées par une touche légèrement mentholée. Sur le palais, c’est une cuvée immense. Le Vintage 2008 est élancé, épuré, tonique. Le fruit se déclame haut et clair, et l’acidité, signe distinctif de ce millésime, est ici remarquablement intégrée. La finale évoque les épices et s’achève une touche fumée. Déjà un immense champagne dans sa première plénitude, qui possède un potentiel de garde tout aussi immense.', 
-				155, 30, 0, '/resources/photo/perignon.png', 0);
+				155, 30, 0, '/resources/photo/perignon.jpg', 0);
 insert into alcools_categories values (7,13), (7,27);
 # -----------------------------------------------------------------------------
 #ajout produits spriritueux
 insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
-		values ('Spiritueux', 'Langavulin', 
+		values ('Spiritueux', 'Lagavulin', 
 				'Sa robe est couleur or avec des reflets ambrés. La tourbe est très présente au nez, mais on distingue également un côté marin, iodé ainsi que des notes boisées. En bouche, on retrouve la puissance de la tourbe, mais le côté marin reste bien présent et offre un bel équilibre.', 
-				65, 22, 0, '/resources/photo/.png', 0);
+				65, 22, 0, '/resources/photo/lagavulin.jpg', 0);
 insert into alcools_categories values (8,28), (8,16);
 
 insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
