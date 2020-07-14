@@ -80,20 +80,20 @@ insert into categories (class_name, nom) values ('CatRegion', 'Alsace') ;
 insert into categories (class_name, nom) values ('CatRegion', 'Bourgogne') ;
 insert into categories (class_name, nom) values ('CatRegion', 'Italie') ;
 
-insert into categories (class_name, nom) values ('CatTypes', 'Rouge') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Blanc') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Rosé') ;
+insert into categories (class_name, nom) values ('CatType', 'Rouge') ;
+insert into categories (class_name, nom) values ('CatType', 'Blanc') ;
+insert into categories (class_name, nom) values ('CatType', 'Rosé') ;
 
-insert into categories (class_name, nom) values ('CatTypes', 'Brut') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Demi-sec') ;
+insert into categories (class_name, nom) values ('CatType', 'Brut') ;
+insert into categories (class_name, nom) values ('CatType', 'Demi-sec') ;
 
-insert into categories (class_name, nom) values ('CatTypes', 'Cognac') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Whisky') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Gin') ;
+insert into categories (class_name, nom) values ('CatType', 'Cognac') ;
+insert into categories (class_name, nom) values ('CatType', 'Whisky') ;
+insert into categories (class_name, nom) values ('CatType', 'Gin') ;
 
-insert into categories (class_name, nom) values ('CatTypes', 'Blonde') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Brune') ;
-insert into categories (class_name, nom) values ('CatTypes', 'Blanche') ;
+insert into categories (class_name, nom) values ('CatType', 'Blonde') ;
+insert into categories (class_name, nom) values ('CatType', 'Brune') ;
+insert into categories (class_name, nom) values ('CatType', 'Blanche') ;
 
 insert into categories (class_name, nom) values ('CatCepage', 'Cabernet Franc'); 
 insert into categories (class_name, nom) values ('CatCepage', 'Pinot noir'); 
@@ -107,35 +107,35 @@ insert into categories (class_name, nom) values ('CatPays', 'Ecosse') ;
 insert into categories (class_name, nom) values ('CatPays', 'Angleterre') ; 
 # -----------------------------------------------------------------------------
 #ajout produits vin
-insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
+insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo, annee) 
 		values ('Vin', 'chateau Margot', 
 				'Un Château Margaux signe en nous ce qu’est la puissance associée à l’élégance. La première est simplement là pour aider le corps à se mouvoir avec élégance. Le bouquet de ce Château Margaux est d’une infinie complexité, avec ses notes de rose, de pivoine, de fruits noirs, d’épices ; la bouche est fabuleuse de richesse, de suavité, de tension, la finale se révèle longue, délicieuse et rafraîchissante. Ce Château Margaux possède la vertu de faire jaillir les mots pour le décrire. Sa puissance et son amplitude se font dans la douceur, la finale reste fraîche avec une longueur infinie.', 
-				640, 60, 0, '/resources/photo/margaux.png', 0);
+				640, 60, 0, '/resources/photo/margaux.png', 0, 2014);
 insert into alcools_categories values (1,1), (1,5), (1,10), (1,21), (1,24);
 
-insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
+insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo, annee) 
 		values ('Vin', 'Domaine Baudry-Dutour', 
 				'C’est un vin aux arômes de fleurs blanches, d’agrumes, d’anis avec des notes un peu toastées. En bouche, il présente une bonne attaque, c’est un vin frais avec une bonne tension, un vin élégant et racé avec une finale un peu vanillée et grillée. Une belle cuvée qui mérite d’attendre un peu dans le verre pour vous dévoiler toute sa complexité !', 
-				20, 120, 0, '/resources/photo/chinon.jpg', 0);
+				20, 120, 0, '/resources/photo/chinon.jpg', 0, 2017);
 insert into alcools_categories values (2,1), (2,6), (2,11), (2,25);
 
-insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
+insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo, annee) 
 		values ('Vin', 'DOMAINE TRAPET', 
 				'Un nectar plein de vigueur qui parvient merveilleusement à associer force et finesse. Offrant des superbes notes de fruits rouges, ce flacon est formidable en bouche, notamment grâce à une splendide acidité et à des tanins à grains fins. Le Domaine Trapet nous montre tout son savoir-faire au travers de cette réalisation. ', 
-				150, 25, 0, '/resources/photo/trapet.png', 0);
+				150, 25, 0, '/resources/photo/trapet.png', 0, 2015);
 insert into alcools_categories values (3,1), (3,8), (3,10), (3,21), (3,22);
 
-insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
+insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo, annee) 
 		values ('Vin', 'MARCEL DEISS', 
 				'Doté d’une belle robe jaune dorée qui développe des notes de fruits confits, d’œillets et d’épices, cette vendange tardive offre une magnifique structure et une agréable rondeur. En finale, des notes citronnées apportent une dernière touche de fraîcheur à ce vin puissant. Ce grand vin sera dégusté pour lui-même, et sublimera plus que jamais un foie gras poêlé !', 
-				38, 40, 0, '/resources/photo/marcel.png', 0);
+				38, 40, 0, '/resources/photo/marcel.png', 0, 2014);
 insert into alcools_categories values (4,1), (4,7), (4,11), (4,23);
 
 
-insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo) 
+insert into alcools (class_name, designation, description, prix, quantité, selectionne, photo, promo, annee) 
 		values ('Vin', 'Donnafugata', 
 				'Ce rosé est un vin minéral qui accompagnera parfaitement les gambas flambées au whisky, potiron et crème de coco, le saumon gravlax, le carpaccio de Saint Jacques aux agrumes, un risotto de fruits de mer/chorizo.', 
-				18, 35, 0, '/resources/photo/sicilia.jpg', 0);
+				18, 35, 0, '/resources/photo/sicilia.jpg', 0, 2018);
 insert into alcools_categories values (5,3), (5,9), (5,12), (5,22), (5,26);
 # -----------------------------------------------------------------------------
 #ajout produits champagne
@@ -206,3 +206,7 @@ select designation, alcools.prix, quantite, lignes_commandes.prix  from alcools 
 
 select * from categories;
 #SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=2;
+
+SELECT * FROM categories WHERE class_name='CatPays';
+
+select distinct c.id_categorie, c.class_name, c.nom, c.photo from categories as c inner join alcools_categories on id_categorie=categorie_id inner join alcools on id_alcool=alcool_id where alcools.class_name='Vin' and c.class_name='CatType'

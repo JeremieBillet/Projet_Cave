@@ -4,133 +4,32 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      >
       
 
 <h:head>
 	<title>index</title>
 	
 	<h:outputStylesheet library = "css" name = "style_perso.css"/>
+	
 	<style>
     	
-        .ui-menuitem .ui-menu-list {
-			background-color : white;
-		}
-
-		.ui-megamenu>ul {
-    		display: inline-block;
-		}
-		
-		.ui-menuitem-link {
-			margin: 0 20px;
-		}
-		
-		.ui-megamenu{
-			text-align: center;
-			background-color : white;
-			border : none;
-			
-		}
-		.ui-widget-header{
-			background-color : white;
-			border : none;
-		}
-		.ui-menu-child>table{
-			margin : 0 30%;
-		}
-		.ui-menu-child>table>tbody>tr>td>ul{
-			display: inline-grid; 	
-		}
-		
-		.navbar{
-			margin :0;
-			height : 50px;
-			background-color : white;
-			border : none;
-		}
-		.navbar-header{
-			padding-left : 10%;
-			
-		}
-		
-		.navbar-brand{
-		  color : #821c00 !important;
-		}
-		.navbar-right>form {
-			display : inline;
-		}
-		
-		.dropdown-menu{
-			padding : 20px;
-		}
-		.dropdown-menu>div {
-		 padding : 10px;
-		}
-		
-		.dropdown-menu>button, .dropdown-menu>a{
-			margin : 2px 18px;
-			display : block;
-			float : right;
-		}
-		
-		
-		
-		.photo{
-			
-			width : 100%;
-			height : 200px;
+        .photo {
+			width: 100%;
+			height: 200px;
 			overflow: hidden;
-		 	background: url(./resources/images/vin-rouge.webp) no-repeat 0 70%;
-		 	background-size: cover;
+			background: url(./resources/images/vin-rouge.webp) no-repeat 0 70%;
+			background-size: cover;
 		}
 		
-		.sidebar{
-			padding : 30px;
-			height : 100%;
-		}
-		.form-group{
-			margin-left: 15px;
-		}
-		.moncompte{
-			border : none;
-			background-color : white;
-		}
-		.item{
-			margin:2px;
-			float : left;
-			display : block;
-			width : 250px;
-			height : 350px;
-		}
-		.photoitem{
-			position : 0 10%;
 			
-			max-width:200px;
-  			max-height:250px;
-			width: auto;
-			height: auto;
-			
-		}
-		.designation{
-			text-align: center;
-		}
-		.categorie{
-			text-align: center;
-		}
-		.prix{
-			margin-right:20px;
-			color: #821c00;
-			text-align: right;
-			font-size: 25px;
-		}
-		
-		
      </style>
      
      
-     <h:outputScript library = "js" name = "script_perso.css"/>
+     <h:outputScript library = "js" name = "script_perso.js"/>
 </h:head> 
-<body> 
+<h:body> 
 
 	
 	
@@ -148,42 +47,31 @@
 		 	<ui:include src="/templates/sidebar.xhtml" />
 		 </ui:insert> 
 	 </div>  
+
 	
+
 	
-	<b:panel class="item">
+	<div id="espaceAffichage">
 	
-	<b:image value="/resources/images/Saint_Emilion.jpg"  class="photoitem"/>
-	<h4 class="designation">Chateau Kressman</h4>
-	<h5 class="categorie">Bordeaux - St-Emilion</h5>
-	<p class="prix">26€</p>
+	<h:form>
+	 <ui:repeat value="#{produitBean.listeVin}" var="bouteille">
 	
-	</b:panel>
-	
-	
-	
-	
-	
-	
+		<h:link>
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.region.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
 		
+		</b:panel>
+		</h:link>
+	</ui:repeat>
+	</h:form>
 	
-	<script>
-	$(document).ready(function() {
-		  $(".ui-menu-child").css({
-		    'width': ($("body").width() + 'px')
-		  });
-		});
-
-	$(window).bind('resize', function(e)
-			{
-			  if (window.RT) clearTimeout(window.RT);
-			  window.RT = setTimeout(function()
-			  {
-			    this.location.reload(false); /* false to get page from cache */
-			  }, 100);
-			});
-	</script>
-
+	</div>
 	
 
-</body> 
+</h:body> 
 </html>

@@ -26,6 +26,7 @@
 		  <b:button type="submit" class="btn btn-default" icon="search" look="success"/>
 			</h:form>
 		  
+		  
 		  <h:form>
 		  <b:dropButton  value="Mon compte" styleClass="moncompte" style="margin: 0 30px;">
 		  		<label class="control-label">Username :</label>
@@ -50,73 +51,9 @@
 	
 	
 	<h:form> 	 
-	    <p:megaMenu>
-	    	<c:if test="true">
-		    	<p:submenu label="Gestion" style="font-style:bold;">
-			        <p:column>
-			            <p:submenu label="Ajouter">
-			                <p:menuitem value="Ajouter Catégorie"  />
-			                <p:menuitem value="Ajouter Produit"  />
-			            </p:submenu>
-			            <p:submenu label="Modifer">
-			                <p:menuitem value="Modifier Catégorie"  />
-			            </p:submenu>
-			        </p:column>
-			    </p:submenu>
-	    	</c:if>
-		    <p:submenu label="Vin">
-		        <p:column>
-		            <p:submenu label="Régions">
-		                <p:menuitem value="Bordeaux"  />
-		                <p:menuitem value="Pays de la Loire"  />
-		            </p:submenu>
-		            <p:submenu label="Types">
-		                <p:menuitem value="Rouges"  />
-		                <p:menuitem value="Blanc" />
-		                <p:menuitem value="Rosé"  />
-		            </p:submenu>
-		        </p:column>
-		    </p:submenu>
-		 
-		    <p:submenu label="Champagne">
-		        <p:column>
-		            <p:submenu label="Types">
-		                <p:menuitem value="Brut" />
-		                <p:menuitem value="sec" />
-		            </p:submenu>
-		        </p:column>
-		    </p:submenu>
-		 
-		    <p:submenu label="Spiriteux">
-		        <p:column>
-		            <p:submenu label="Types">
-		                <p:menuitem value="Cognac" />
-		                <p:menuitem value="Gin"  />
-		            </p:submenu>
-		            <p:submenu label="Pays">
-		                <p:menuitem value="France"  />
-		                <p:menuitem value="Ecosse" />
-		                <p:menuitem value="US"  />
-		            </p:submenu>
-		        </p:column>
-		    </p:submenu>
-		 
-		    <p:submenu label="Bières">
-		        <p:column>
-		            <p:submenu label="Types">
-		                <p:menuitem value="Brune" />
-		                <p:menuitem value="Blanche"/>
-		            </p:submenu>
-		            <p:submenu label="Pays">
-		                <p:menuitem value="Belgique" />
-		                <p:menuitem value="Allemagne" />
-		            </p:submenu>
-		        </p:column>
-		    </p:submenu>
-		 
-		    <p:menuitem value="promo"/>
-		</p:megaMenu>
+	    <p:megaMenu model="#{produitBean.model}" />
 	</h:form>
+	
 	
 	
 	<div class="photo"></div>

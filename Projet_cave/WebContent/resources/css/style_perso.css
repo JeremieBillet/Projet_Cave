@@ -34,8 +34,8 @@
 .navbar {
 	margin: 0;
 	height: 50px;
-	background-color: white;
-	border: none;
+	background-color: white !important;
+	border: none !important;
 }
 
 .navbar-header {
@@ -44,6 +44,7 @@
 
 .navbar-brand {
 	color: #821c00 !important;
+	font-size: 30px !important;
 }
 
 .navbar-right>form {
@@ -51,7 +52,7 @@
 }
 
 .dropdown-menu {
-	padding: 20px;
+	padding: 20px !important;
 }
 
 .dropdown-menu>div {
@@ -64,17 +65,22 @@
 	float: right;
 }
 
-.photo {
-	width: 100%;
-	height: 200px;
-	overflow: hidden;
-	background: url(./resources/images/vin-rouge.webp) no-repeat 0 70%;
-	background-size: cover;
-}
 
 .sidebar {
 	padding: 30px;
 	height: 100%;
+	width : 20%;
+	
+}
+
+.sidebar>h4{
+	font-style : bold;
+	font-size : 25px;
+	color: #821c00;
+}
+
+.control-label{
+	color: #821c00;
 }
 
 .form-group {
@@ -87,19 +93,24 @@
 }
 
 .item {
-	margin: 2px;
-	float: left;
+	margin : 0.1%;
 	display: block;
-	width: 250px;
-	height: 350px;
+	float : left;
+	width: 19.8%;
+	height: 400px;
+}
+.conteneurphoto{
+	width : 100%;
+	overflow: hidden;
+	text-align: center;
 }
 
 .photoitem {
-	position: 0 10%;
-	max-width: 200px;
 	max-height: 250px;
 	width: auto;
 	height: auto;
+	margin-left: 50%;
+	transform: translateX(-50%);
 }
 
 .designation {
@@ -115,4 +126,15 @@
 	color: #821c00;
 	text-align: right;
 	font-size: 25px;
+}
+
+#espaceAffichage{
+	display: block;
+	float : left;
+	width : 80%;
+	
+	
+}
+.panel-group{
+	margin :  0 !important;
 }
