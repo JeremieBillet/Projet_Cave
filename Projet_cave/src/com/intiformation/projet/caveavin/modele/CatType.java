@@ -25,6 +25,10 @@ public class CatType extends Categorie{
 	public CatType(String nomObjetCat) {
 		super(nomObjetCat);
 	}
+	
+	public CatType(int idCategorie, String nomObjetCat) {
+		super(idCategorie, nomObjetCat);
+	}
 
 	/*________________ GETTER / SETTER _________________*/
 

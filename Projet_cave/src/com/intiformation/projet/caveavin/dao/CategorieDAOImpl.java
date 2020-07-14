@@ -252,49 +252,32 @@ public class CategorieDAOImpl implements ICategorieDAO{
 			
 			rs = ps.executeQuery();
 			
-			rs.next();
+			List<Categorie> listeCatBDD = new ArrayList<>();
 			
-			if (className.equals("CatPays")) {
+			while (rs.next()) {
 				
-				List<CatPays> listeCatPaysBDD = new ArrayList<>();
-				CatPays catPays = null;
+				if (className.equals("CatPays")) {
+					
+					listeCatBDD.add(new CatPays(rs.getInt(1),rs.getString(3)));
+					
+				}else if (className.equals("CatRegion")){
+					
+					listeCatBDD.add(new CatRegion(rs.getInt(1),rs.getString(3)));
+					
+				}else if (className.equals("CatCepage")){
 				
-				catPays = new CatPays(rs.getInt(1), rs.getString(3));
+					listeCatBDD.add(new CatCepage(rs.getInt(1),rs.getString(3)));
+					
+				}else if (className.equals("CatType")) {
+					
+					listeCatBDD.add(new CatType(rs.getInt(1),rs.getString(3), rs.getString(4)));
+				
+				}
+				
+			}//end while
 
-				listeCatPaysBDD.add(catPays);
-				
-			}else if (className.equals("CatRegion")){
-				
-				List<CatRegion> listeCatRegionBDD = new ArrayList<>();
-				CatRegion catRegion = null;
-				
-				catRegion = new CatRegion(rs.getInt(1), rs.getString(3));
-
-				listeCatRegionBDD.add(catRegion);
-				
-			}else if (className.equals("CatCepage")){
-				
-				List<CatCepage> listeCatCepageBDD = new ArrayList<>();
-				CatCepage catCepage = null;
-				
-				catCepage = new CatCepage(rs.getInt(1), rs.getString(3));
-
-				listeCatCepageBDD.add(catCepage);
-				
-			}else if (className.equals("CatType")) {
-				
-				List<CatType> listeCatTypeBDD = new ArrayList<>();
-				CatType catType = null;
-				
-				catType = new CatType(rs.getInt(1), rs.getString(3), rs.getString(4));
-
-				listeCatTypeBDD.add(catType);
-				
-			}else {
-				
-				return null;
-				
-			}//end else		
+			return listeCatBDD;
+	
 
 		} catch (SQLException e) {
 			System.out.println("... (CategorieDAOImpl) Erreur lors de l'excéution de la méthode getByClassName() ...");
@@ -312,6 +295,56 @@ public class CategorieDAOImpl implements ICategorieDAO{
 		return null;
 		
 	}//end getByClassName
+	
+	
+	/**
+	 * 
+	 */
+	@Override
+	public List<Categorie> getByClassNameAndAlcool(String nameCat, String nameAlcool) {
+		try {
+
+			ps = this.connection.prepareStatement("select distinct c.id_categorie, c.class_name, c.nom, c.photo from categories as c inner join alcools_categories on id_categorie=categorie_id inner join alcools on id_alcool=alcool_id where alcools.class_name=? and c.class_name=?");
+			ps.setString(1, nameAlcool);
+			ps.setString(2, nameCat);
+			
+			rs = ps.executeQuery();
+			
+			List<Categorie> listeCat = new ArrayList<>();
+			
+			
+			while(rs.next()) {
+				if (rs.getString(2).equals("CatPays")) {
+					listeCat.add(new CatPays(rs.getInt(1), rs.getString(3)));
+					
+				}else if (rs.getString(2).equals("CatRegion")){
+					listeCat.add(new CatRegion(rs.getInt(1), rs.getString(3)));
+					
+				}else if (rs.getString(2).equals("CatCepage")){
+					listeCat.add(new CatCepage(rs.getInt(1), rs.getString(3)));
+					
+				}else if (rs.getString(2).equals("CatType")) {
+					listeCat.add(new CatType(rs.getInt(1), rs.getString(3), rs.getString(4)));
+				}
+			}//end while	
+			
+			return listeCat;
+			
+		} catch (SQLException e) {
+			System.out.println("... (CategorieDAOImpl) Erreur lors de l'excéution de la méthode getByClassName() ...");
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} // end finally
+
+		return null;
+	}//end getByClassNameAndAlcool
 
 
 }//end class

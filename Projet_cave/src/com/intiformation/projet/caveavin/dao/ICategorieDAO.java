@@ -16,6 +16,8 @@ public interface ICategorieDAO extends IGeneralizable<Categorie>{
 	public List<Categorie> getByClassName(String className);
 	
 	public List<Categorie> getAll();
+
+	List<Categorie> getByClassNameAndAlcool(String nameCat, String nameAlcool);
 	
 	
 }//end interface
