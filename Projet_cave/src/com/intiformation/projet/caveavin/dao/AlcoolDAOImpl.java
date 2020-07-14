@@ -599,16 +599,11 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		try {
 			
 			ps = this.connection.prepareStatement("SELECT * FROM alcools WHERE class_name='Vin'");
+			ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
 			
 			rs = ps.executeQuery();
 			
-			Vin vin = null;
-			List<Vin> listeVins = null;
-			
-			CatPays pays = null;
-			CatType type = null;
-			CatRegion region = null;
-			List<CatCepage> listeCepages = new ArrayList<>();
+			List<Vin> listeVins = new ArrayList<>();
 			
 			while (rs.next()) {
 				
@@ -623,8 +618,12 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				double promo = rs.getDouble(9);
 				int annee = rs.getInt(10);
 				
-				ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
+				CatPays pays = null;
+				CatType type = null;
+				CatRegion region = null;
+				List<CatCepage> listeCepages = new ArrayList<>();
 				
+				ps2.setInt(1, id);
 				rs2 = ps2.executeQuery();
 				
 				while (rs2.next()) {
@@ -644,11 +643,9 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 					
 				}//end while - rs2
 				
-				vin = new Vin(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, region, type, listeCepages, annee);
-				
-				listeVins.add(vin);
-				
+				listeVins.add(new Vin(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, region, type, listeCepages, annee));
 			}//end while rs
+			
 			
 			return listeVins;
 			
@@ -696,6 +693,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		try {
 			
 			ps = this.connection.prepareStatement("SELECT * FROM alcools WHERE class_name='Champagne'");
+			ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
 			
 			rs = ps.executeQuery();
 			
@@ -718,8 +716,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				double promo = rs.getDouble(9);
 				int annee = rs.getInt(10);
 				
-				ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
-				
+				ps2.setInt(1, id);
 				rs2 = ps2.executeQuery();
 				
 				while (rs2.next()) {
@@ -785,6 +782,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		try {
 			
 			ps = this.connection.prepareStatement("SELECT * FROM alcools WHERE class_name='Biere'");
+			ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
 			
 			rs = ps.executeQuery();
 			
@@ -806,8 +804,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				String photo = rs.getString(8);
 				double promo = rs.getDouble(9);
 				
-				ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
-				
+				ps2.setInt(1, id);
 				rs2 = ps2.executeQuery();
 				
 				while (rs2.next()) {
@@ -873,6 +870,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		try {
 			
 			ps = this.connection.prepareStatement("SELECT * FROM alcools WHERE class_name='Spiritueux'");
+			ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
 			
 			rs = ps.executeQuery();
 			
@@ -894,8 +892,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				String photo = rs.getString(8);
 				double promo = rs.getDouble(9);
 				
-				ps2 = this.connection.prepareStatement("SELECT * FROM categories INNER JOIN alcools_categories ON id_categorie=categorie_id WHERE alcool_id=?");
-				
+				ps2.setInt(1, id);
 				rs2 = ps2.executeQuery();
 				
 				while (rs2.next()) {
