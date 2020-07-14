@@ -86,7 +86,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				addCepageAlcool(idAlcool, ((Vin) pAlcool).getCepage());
 				
 			} else if (pAlcool instanceof Champagne) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?, ?)");
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?)");
 				
 				ps3.setInt(1, idAlcool);
 				ps3.setInt(2, ((Champagne) pAlcool).getType().getIdCategorie());
@@ -698,7 +698,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			rs = ps.executeQuery();
 			
 			Champagne champagne = null;
-			List<Champagne> listeChampagnes = null;
+			List<Champagne> listeChampagnes = new ArrayList<>();
 			
 			CatType type = null;
 			List<CatCepage> listeCepages = new ArrayList<>();
@@ -787,7 +787,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			rs = ps.executeQuery();
 			
 			Biere biere = null;
-			List<Biere> listeBieres = null;
+			List<Biere> listeBieres = new ArrayList<>();
 			
 			CatPays pays = null;
 			CatType type = null;
@@ -875,7 +875,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			rs = ps.executeQuery();
 			
 			Spiritueux spiritueux = null;
-			List<Spiritueux> listeSpiritueux = null;
+			List<Spiritueux> listeSpiritueux = new ArrayList<>();
 			
 			CatPays pays = null;
 			CatType type = null;
