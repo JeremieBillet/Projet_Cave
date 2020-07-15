@@ -101,6 +101,7 @@ public class ProduitBean implements Serializable {
 		ajoutColonne(Submenu, listePaysVin, "Par Pays");
 		ajoutColonne(Submenu, listeRegionVin, "Par Région");
 		ajoutColonne(Submenu, listeTypeVin, "Par Type");
+		ajoutColonne(Submenu, "Tous les vins");
 
 		model.getElements().add(Submenu);
 
@@ -108,6 +109,7 @@ public class ProduitBean implements Serializable {
 		Submenu = new DefaultSubMenu("Champagne");
 
 		ajoutColonne(Submenu, listeTypeChampagne, "Par Type");
+		ajoutColonne(Submenu, "Tous les champagnes");
 
 		model.getElements().add(Submenu);
 
@@ -116,6 +118,7 @@ public class ProduitBean implements Serializable {
 
 		ajoutColonne(Submenu, listeTypeSpiritueux, "Par Type");
 		ajoutColonne(Submenu, listePaysSpiritueux, "Par Pays");
+		ajoutColonne(Submenu, "Tous les spiritueux");
 
 		model.getElements().add(Submenu);
 
@@ -124,6 +127,7 @@ public class ProduitBean implements Serializable {
 
 		ajoutColonne(Submenu, listeTypeBiere, "Par Type");
 		ajoutColonne(Submenu, listePaysBiere, "Par Pays");
+		ajoutColonne(Submenu, "Toutes les bières");
 
 		model.getElements().add(Submenu);
 
@@ -162,14 +166,39 @@ public class ProduitBean implements Serializable {
 		submenu.getElements().add(column);
 	}
 
+	public void ajoutColonne(DefaultSubMenu submenu, String label) {
+		DefaultMenuColumn column;
+		DefaultSubMenu columnMenu;
+		DefaultMenuItem item;
+
+		column = new DefaultMenuColumn();
+		columnMenu = new DefaultSubMenu(" ");
+		columnMenu.setStyleClass("control-label");
+
+		item = new DefaultMenuItem(label);
+		item.setCommand("#{produitBean.selectByCat}");
+		Map<String, List<String>> parameters = new HashMap<String, List<String>>() {
+			{
+				put("label", new ArrayList<String>(Arrays.asList(submenu.getLabel())));
+				put("catId", new ArrayList<String>(Arrays.asList("0")));
+			}
+		};
+		item.setParams(parameters);
+		columnMenu.getElements().add(item);
+
+		column.getElements().add(columnMenu);
+		submenu.getElements().add(column);
+	}
+
 	public String selectByCat() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		produitRecherche = params.get("label");
-		Categorie cat = catDao.getById(Integer.parseInt(params.get("catId")));
+		int catId = Integer.parseInt(params.get("catId"));
 
 		initFilter();
 
-		if (produitRecherche.equals("Vin")) {
+		if (produitRecherche.equals("Vin") && catId != 0) {
+			Categorie cat = catDao.getById(Integer.parseInt(params.get("catId")));
 			if (cat instanceof CatPays)
 				filterVinByPays(cat.getIdCategorie());
 			if (cat instanceof CatRegion)
@@ -178,19 +207,22 @@ public class ProduitBean implements Serializable {
 				filterVinByType(cat.getIdCategorie());
 		}
 
-		if (produitRecherche.equals("Champagne")) {
+		if (produitRecherche.equals("Champagne") && catId != 0) {
+			Categorie cat = catDao.getById(Integer.parseInt(params.get("catId")));
 			if (cat instanceof CatType)
 				filterChampagneByType(cat.getIdCategorie());
 		}
 
-		if (produitRecherche.equals("Spiritueux")) {
+		if (produitRecherche.equals("Spiritueux") && catId != 0) {
+			Categorie cat = catDao.getById(Integer.parseInt(params.get("catId")));
 			if (cat instanceof CatPays)
 				filterSpiritueuxByPays(cat.getIdCategorie());
 			if (cat instanceof CatType)
 				filterSpiritueuxByType(cat.getIdCategorie());
 		}
 
-		if (produitRecherche.equals("Bière")) {
+		if (produitRecherche.equals("Bière") && catId != 0) {
+			Categorie cat = catDao.getById(Integer.parseInt(params.get("catId")));
 			if (cat instanceof CatPays)
 				filterBiereByPays(cat.getIdCategorie());
 			if (cat instanceof CatType)
@@ -205,15 +237,13 @@ public class ProduitBean implements Serializable {
 		listeSpiriteux = null;
 		listeBiere = null;
 		listeVin = null;
-		
+
 		filter = null;
 
 		if (produitRecherche.equals("Vin")) {
 			listeVin = alcoolDao.getAllVin();
-			
 
-			prixMax = listeVin.stream().max((v1, v2) -> Double.compare(v1.getPrix(), v2.getPrix())).get()
-					.getPrix();
+			prixMax = listeVin.stream().max((v1, v2) -> Double.compare(v1.getPrix(), v2.getPrix())).get().getPrix();
 			prixFiltre = prixMax;
 		}
 		if (produitRecherche.equals("Champagne")) {
@@ -233,8 +263,7 @@ public class ProduitBean implements Serializable {
 		if (produitRecherche.equals("Bière")) {
 			listeBiere = alcoolDao.getAllBiere();
 
-			prixMax = listeBiere.stream().max((v1, v2) -> Double.compare(v1.getPrix(), v2.getPrix())).get()
-					.getPrix();
+			prixMax = listeBiere.stream().max((v1, v2) -> Double.compare(v1.getPrix(), v2.getPrix())).get().getPrix();
 			prixFiltre = prixMax;
 		}
 
@@ -249,15 +278,16 @@ public class ProduitBean implements Serializable {
 			listeVin = listeVin.stream().filter(v -> v.getPrix() <= prixFiltre).collect(Collectors.toList());
 		}
 		if (produitRecherche.equals("Champagne")) {
-			listeChampagne = listeChampagne.stream().filter(v -> v.getPrix() <= prixFiltre).collect(Collectors.toList());
+			listeChampagne = listeChampagne.stream().filter(v -> v.getPrix() <= prixFiltre)
+					.collect(Collectors.toList());
 		}
 		if (produitRecherche.equals("Spiritueux")) {
-			listeSpiriteux = listeSpiriteux.stream().filter(v -> v.getPrix() <= prixFiltre).collect(Collectors.toList());
+			listeSpiriteux = listeSpiriteux.stream().filter(v -> v.getPrix() <= prixFiltre)
+					.collect(Collectors.toList());
 		}
 		if (produitRecherche.equals("Bière")) {
 			listeBiere = listeBiere.stream().filter(v -> v.getPrix() <= prixFiltre).collect(Collectors.toList());
 		}
-		
 	}
 
 	public void filterVinByPays(int paysId) {
