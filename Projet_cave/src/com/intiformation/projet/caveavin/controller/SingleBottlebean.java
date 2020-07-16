@@ -44,9 +44,7 @@ public class SingleBottlebean implements Serializable{
 		return "show_single_bottle?faces-redirect=true";
 	}
 	
-	public void ajouterAuPanier(int idBottle) {
-		System.out.println("ok");
-	}
+	
 	
 
 	/*_________________getters/setters_________________*/

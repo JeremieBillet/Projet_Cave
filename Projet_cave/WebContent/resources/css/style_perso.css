@@ -68,7 +68,6 @@
 
 .sidebar {
 	padding: 30px;
-	height: 100%;
 	width : 20%;
 	
 }
@@ -139,6 +138,9 @@
 	margin :  0 !important;
 }
 
+
+
+
 #singleContainer{
 	padding : 2% 20%;
 }
@@ -157,10 +159,7 @@
 }
 
 #singlePhoto{
-	width: auto;
 	max-height : 500px;
-	margin-left: 50%;
-	transform: translateX(-50%);
 }
 
 #singleCaracteristique{
@@ -179,4 +178,88 @@
 	margin-right : 10px;
 	text-align : right;
 	color: #821c00;
+}
+
+#panierContainer{
+	padding : 2% 20%;
+	margin-bottom: 10%;
+}
+.ui-state-default{
+	background-image : none;
+	background-color: #4682b4;
+	color : white;
+	border : none;
+}
+
+
+.ui-datatable>div>table>thead>tr>th:first-child{
+	border-top-left-radius: 8px;
+}
+.ui-datatable>div>table>thead>tr>th:last-child{
+	border-top-right-radius: 8px;  
+}
+.ui-datatable>div>table>thead{
+	text-align: center;
+}
+.ui-datatable>div>table>tbody{
+	text-align: right;
+}
+
+#panierTitle{
+	color: #821c00;
+	margin-left: 30px;
+}
+#panierSubTable{
+	display : block;
+	float :right;
+	margin : 3% 1%;
+	width : 30%;
+}
+#panierRow{
+	margin-top : 2%;
+	witdh : 100%;
+	height: 30px;
+}
+#panierCol1{
+	display : block;
+	float : left;
+	width : 60%;
+	text-align: center;
+	border-radius: 5px;
+	height : 100%;
+	padding : 4px;
+	font-size: 16px;
+}
+#panierCol2{
+	display : block;
+	float : left;
+	width : 40%;
+	text-align: right;
+	height : 100%;
+	padding : 4px;
+	font-size: 16px;
+}
+
+
+@media ( max-width : 1200px){
+	.item {
+	width: 33.1%;
+	}
+	.sidebar {
+	width : 25%;
+	}
+	#espaceAffichage{
+	width : 75%;
+	}
+}
+@media ( max-width : 768px){
+	.item {
+	width: 49.8%;
+	}
+	.sidebar {
+	width : 100%;
+	}
+	#espaceAffichage{
+	width : 100%;
+	}
 }

@@ -44,12 +44,12 @@
 		<h1 id="singleDesignation">#{singlebottleBean.alcool.designation}</h1>
 		
 		<div id="singleContainerPhoto">
-		<b:image value="#{singlebottleBean.alcool.photo}"  id="singlePhoto"/>
+		<b:image value="#{singlebottleBean.alcool.photo}"  class="photoitem" id="singlePhoto"/>
 		</div>
 		<div id="singleCaracteristique">
 			<h2 id="singlePrix">#{singlebottleBean.alcool.prix} €</h2>
 			<h:form>
-			<h:commandButton class="btn pull-right btn-primary" action="#{singlebottleBean.ajouterAuPanier(singlebottleBean.alcool.idAlcool)}" value="Ajouter au panier" />
+			<h:commandButton class="btn pull-right btn-primary" action="#{panierBean.ajouterAuPanier(singlebottleBean.alcool)}" value="Ajouter au panier" />
 			</h:form>
 			<br/><br/>
 			
