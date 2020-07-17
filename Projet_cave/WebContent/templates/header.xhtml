@@ -26,22 +26,25 @@
 		  <b:button type="submit" class="btn btn-default" icon="search" look="success"/>
 			</h:form>
 		  
+		  <c:if test=" #{AuthentificationBean.admin} == false || #{AuthentificationBean.client} == false ">
+		  		<h:form>
+		  		<b:dropButton  value="Mon compte" styleClass="moncompte" style="margin: 0 30px;">
+		  			<label class="control-label">Username :</label>
+      				<b:inputText placeholder="Username" />
+      				<label class="control-label">Password :</label>
+      				<b:inputText placeholder="Password" />
+      				<b:commandButton type="submit" class="btn btn-primary" value="Se Connecter" />
+      				<b:link type="submit" value="créer un compte"/>
 		  
-		  <h:form id="connection">
-		  <b:dropButton  value="Mon compte" styleClass="moncompte" style="margin: 0 30px;">
-		  		<label class="control-label">Username :</label>
-      			<b:inputText placeholder="Username" />
-      			<label class="control-label">Password :</label>
-      			<b:inputText placeholder="Password" />
-      			<b:button type="submit" class="btn btn-primary" value="Se Connecter" />
-      			<b:link type="submit" value="créer un compte"/>
+				</b:dropButton>
+		  		</h:form>
+		  </c:if>
 		  
-		  </b:dropButton>
-		  </h:form>
-		  
-		  <h:form id="deconnection">
-		  		<b:button type="submit" class="btn btn-primary" value="Se Déconnecter"/>
-		  </h:form>
+		  <c:if test=" #{AuthentificationBean.admin} == true || #{AuthentificationBean.client} == true ">
+		  		<h:form id="deconnection">
+		  			<b:commandButton type="submit" class="btn btn-primary" value="Se Déconnecter"/>
+		  		</h:form>
+		  </c:if>
 		  
 		  <h:form>
 		  <b:link type="submit"><b:image value="/resources/images/basket.webp" height ="35px" /></b:link>
