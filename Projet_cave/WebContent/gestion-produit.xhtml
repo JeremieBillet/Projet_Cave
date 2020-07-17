@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+      
+
+<!-- ================================================================ -->
+<!-- ============================ HEAD ============================== -->
+<!-- ================================================================ -->
+
+<h:head>
+	<h:outputStylesheet library = "css" name = "style_perso.css"/>
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+	<style>   	
+		.photo{
+			
+			width : 100%;
+			height : 200px;
+			overflow: hidden;
+		 	background: url(./resources/images/fond-categorie2.jpg) no-repeat 0 70%;
+		 	background-size: cover;
+		}		
+     </style>
+</h:head> 
+
+
+<!-- ================================================================= -->
+<!-- ============================ CORPS ============================== -->
+<!-- ================================================================= -->
+
+<h:body> 
+
+<!-- == Le Header == -->
+<!-- =============== -->
+
+	<div id="header">
+		 <ui:insert name="header">
+		 	<ui:include src="/templates/header.xhtml" />
+		 </ui:insert> 
+	 </div>
+	 
+	<br/><br/>
+	
+<!-- == Le Menu Gestion == -->
+<!-- ===================== -->	
+	
+	<div style="float: left; display: block">
+
+		<h:form style="margin-top:-20px; margin-left: 10px;">  
+			<h3>Menu de gestion</h3>
+			<br/>
+    		<h4 style="font-weight: bold;">Catégories</h4>
+    		
+    		<p:menu style="background-color: white; border:none;">
+            	<p:menuitem id="CatPays" value="Pays" action="category" 
+            							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}">
+            	</p:menuitem>	 			
+            	<p:menuitem id="CatRegion" value="Région" action="category"
+            							   actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}">
+            	</p:menuitem>
+            	<p:menuitem id="CatCepage" value="Cépage" action="category" 
+            							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}"/>
+            	<p:menuitem id="CatType" value="Type" action="category" 
+            							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}"/>
+        	</p:menu> 
+        	
+        	<h4 style="font-weight: bold;">Produits</h4>
+        	   	
+        	<p:menu style="background-color: white; border:none;">    	
+            	<p:menuitem id="vin" value="Vin" action="product" 
+            						 			 actionListener="#{gestionProduitBean.findAllVin}"/>
+            	<p:menuitem id="champagne" value="Champagne" action="product"
+            						 			 actionListener="#{gestionProduitBean.findAllChampagne}"/>
+            	<p:menuitem id="biere" value="Biere" action="product"
+            						 			 actionListener="#{gestionProduitBean.findAllBiere}"/>
+            	<p:menuitem id="spiritueux" value="Spiritueux" action="product"
+            						 			 actionListener="#{gestionProduitBean.findAllSpiritueux}"/>
+    		</p:menu>
+    		
+    		<h4 style="font-weight: bold;">Commmandes</h4>
+    		<p:menu style="background-color: white; border:none;">    	
+            	<p:menuitem value="Rechercher une commande" action="search"/>
+    		</p:menu>
+    		
+    	</h:form>  
+    	
+    </div>
+    
+<!-- == Le Gestionnaire des produits == -->
+<!-- ==================================== -->  
+	<!-- =========================================================================================================== -->  
+	<!-- 									TABLEAU POUR LE VIN		 												 -->
+	<!-- =========================================================================================================== -->      
+    <c:if test="#{gestionProduitBean.nomCat == 'vin'}">
+    
+    	<div style=" display:block; width:80%; margin-left:200px; text-align: center; font-size: 10px">
+       	
+ 		
+ 		<h:form id="form">
+    	<p:growl id="msgs" showDetail="true"/>
+ 	
+    	<p:dataTable id="paniertab" value="#{gestionProduitBean.findAllVin()}" var="vin" editable="true" style="margin-bottom:20px">
+        	<f:facet name="header">
+            	Gestionnaire des produits
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{gestionProduitBean.onRowEdit}" update=":form:msgs"/>
+        	<p:ajax event="rowEditCancel" listener="#{gestionProduitBean.onRowCancel}" update=":form:msgs"/>
+ 
+ 			<!-- == Colonne pour l'ID == -->
+			<!-- ======================= --> 
+        	<p:column style="width:50px;">
+        		<f:facet name="header">
+	 				<h:outputText value="ID" />
+	 			</f:facet>           	
+                <h:outputText value="#{vin.idAlcool}"/>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le type == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Type" style="width:100px">
+                <h:outputText value="#{vin.type.nomObjetCat}" />
+        	</p:column>
+ 
+ 			<!-- == Colonne pour la designation == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Designation" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.designation}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.designation}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la photo == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Photo" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.photo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.photo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour l'année == -->
+			<!-- ========================== --> 
+        	<p:column headerText="Année" style="width:50px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.annee}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.annee}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le pays == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Pays" style="width:90px">
+				<h:outputText value="#{vin.pays.nomObjetCat}" />
+        	</p:column>
+        	
+        	<!-- == Colonne pour la region == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Region" style="width:90px">
+                	<h:outputText value="#{vin.region.nomObjetCat}" />
+        	</p:column>
+        	
+        	<!-- == Colonne pour la description == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Description" style="width:550px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.description}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.description}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le cepage == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Cépage" style="width:100px">
+          		<ui:repeat var="cepage" value="#{vin.cepage}">  - #{cepage.nomObjetCat}</ui:repeat>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la classe == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Classe" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.classe}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.classe}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le prix == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Prix" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.prix}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.prix}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la promo == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Promo" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.promo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.promo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la quantité == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Quantité" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{vin.quantite}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{vin.quantite}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	        	 
+ 			<!-- == Colonne pour la suppression == -->
+			<!-- ================================= -->
+        	<p:column style="width:90px">
+        		<f:facet name="header">
+	 				Supprimer
+	 			</f:facet>
+            	<p:commandLink id="del" rerender="tab" action="product" actionListener="#{gestionProduitBean.supprimerAlcool}">	 					  
+	 				<f:param id="deleteAlcool" name="id" value="#{vin.idAlcool}"/>	 			 
+	 				<i class="pi pi-trash"/>				  	 					   
+	 			</p:commandLink>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la modification == -->
+			<!-- ================================== -->
+        	<p:column headerText="Modifier" style="width:90px">
+            	<p:rowEditor />
+            	<f:param id="updateid" name="id" value="#{vin.idAlcool}"/>
+            	<f:param id="updateDesignation" name="id" value="#{vin.designation}"/>
+            	<f:param id="updatePhoto" name="id" value="#{vin.photo}"/>
+            	<f:param id="updateDescription" name="id" value="#{vin.description}"/>           	
+            	<f:param id="updateClasse" name="id" value="#{vin.classe}"/>
+            	<f:param id="updatePrix" name="id" value="#{vin.prix}"/>
+            	<f:param id="updatePromo" name="id" value="#{vin.promo}"/>
+            	<f:param id="updateQuantite" name="id" value="#{vin.quantite}"/>
+        	</p:column>
+        
+        
+    </p:dataTable>
+    	
+	<!-- == Element pour ajouter une catégorie == -->
+	<!-- ======================================== -->
+	<div style="display: block">
+		<h:commandButton value="Ajouter" />		
+	</div>
+
+ 	</h:form>
+
+	 </div>
+    
+    </c:if>
+    	
+
+    <!-- =========================================================================================================== -->  
+	<!-- 									TABLEAU POUR LA BIERE 													 -->
+	<!-- =========================================================================================================== -->     
+    <c:if test="#{gestionProduitBean.nomCat == 'biere'}">
+    
+    	<div style=" display:block; width:80%; margin-left:200px; text-align: center; font-size: 10px">
+       	
+ 		
+ 		<h:form id="form">
+    	<p:growl id="msgs" showDetail="true"/>
+ 	
+    	<p:dataTable id="paniertab" value="#{gestionProduitBean.findAllBiere()}" var="biere" editable="true" style="margin-bottom:20px">
+        	<f:facet name="header">
+            	Gestionnaire des produits
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{gestionProduitBean.onRowEdit}" update=":form:msgs"/>
+        	<p:ajax event="rowEditCancel" listener="#{gestionProduitBean.onRowCancel}" update=":form:msgs"/>
+ 
+ 			<!-- == Colonne pour l'ID == -->
+			<!-- ======================= --> 
+        	<p:column style="width:50px;">
+        		<f:facet name="header">
+	 				<h:outputText value="ID" />
+	 			</f:facet>           	
+                <h:outputText value="#{biere.idAlcool}"/>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le type == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Type" style="width:100px">
+                <h:outputText value="#{biere.type.nomObjetCat}" />
+        	</p:column>
+ 
+ 			<!-- == Colonne pour la designation == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Designation" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.designation}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.designation}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la photo == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Photo" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.photo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.photo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le pays == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Pays" style="width:90px">
+                	<h:outputText value="#{biere.pays.nomObjetCat}" />
+        	</p:column>
+
+        	<!-- == Colonne pour la description == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Description" style="width:550px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.description}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.description}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la classe == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Classe" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.classe}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.classe}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le prix == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Prix" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.prix}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.prix}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la promo == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Promo" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.promo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.promo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la quantité == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Quantité" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{biere.quantite}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{biere.quantite}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	        	 
+ 			<!-- == Colonne pour la suppression == -->
+			<!-- ================================= -->
+        	<p:column style="width:90px">
+        		<f:facet name="header">
+	 				Supprimer
+	 			</f:facet>
+            	<p:commandLink id="del" rerender="tab" action="product" actionListener="#{gestionProduitBean.supprimerAlcool}">	 					  
+	 				<f:param id="deleteAlcool" name="id" value="#{biere.idAlcool}"/>	 			 
+	 				<i class="pi pi-trash"/>				  	 					   
+	 			</p:commandLink>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la modification == -->
+			<!-- ================================== -->
+        	<p:column headerText="Modifier" style="width:90px">
+            	<p:rowEditor />
+            	<f:param id="updateid" name="id" value="#{biere.idAlcool}"/>
+            	<f:param id="updateDesignation" name="id" value="#{biere.designation}"/>
+            	<f:param id="updatePhoto" name="id" value="#{biere.photo}"/>
+            	<f:param id="updateDescription" name="id" value="#{biere.description}"/>           	
+            	<f:param id="updateClasse" name="id" value="#{biere.classe}"/>
+            	<f:param id="updatePrix" name="id" value="#{biere.prix}"/>
+            	<f:param id="updatePromo" name="id" value="#{biere.promo}"/>
+            	<f:param id="updateQuantite" name="id" value="#{biere.quantite}"/>
+        	</p:column>
+        
+        
+    </p:dataTable>
+    	
+	<!-- == Element pour ajouter une catégorie == -->
+	<!-- ======================================== -->
+	<div style="display: block">
+		<h:commandButton value="Ajouter" />		
+	</div>
+
+ 	</h:form>
+
+	 </div>
+    
+    </c:if>
+
+        
+    <!-- =========================================================================================================== -->  
+	<!-- 									TABLEAU POUR LE CHAMPAGNE 												 -->
+	<!-- =========================================================================================================== -->     
+    <c:if test="#{gestionProduitBean.nomCat == 'champagne'}">
+    
+    	<div style=" display:block; width:80%; margin-left:200px; text-align: center; font-size: 10px">
+       	
+ 		
+ 		<h:form id="form">
+    	<p:growl id="msgs" showDetail="true"/>
+ 	
+    	<p:dataTable id="paniertab" value="#{gestionProduitBean.findAllChampagne()}" var="champ" editable="true" style="margin-bottom:20px">
+        	<f:facet name="header">
+            	Gestionnaire des produits
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{gestionProduitBean.onRowEdit}" update=":form:msgs"/>
+        	<p:ajax event="rowEditCancel" listener="#{gestionProduitBean.onRowCancel}" update=":form:msgs"/>
+ 
+ 			<!-- == Colonne pour l'ID == -->
+			<!-- ======================= --> 
+        	<p:column style="width:50px;">
+        		<f:facet name="header">
+	 				<h:outputText value="ID" />
+	 			</f:facet>           	
+                <h:outputText value="#{champ.idAlcool}"/>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le type == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Type" style="width:100px">
+                <h:outputText value="#{champ.type.nomObjetCat}" />
+        	</p:column>
+ 
+ 			<!-- == Colonne pour la designation == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Designation" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.designation}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.designation}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la photo == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Photo" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.photo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.photo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le cepage == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Cépage" style="width:100px">
+                <ui:repeat var="cepage" value="#{champ.cepage}">  - #{cepage.nomObjetCat}</ui:repeat>
+        	</p:column>
+
+        	<!-- == Colonne pour la description == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Description" style="width:550px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.description}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.description}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la classe == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Classe" style="width:80px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.classe}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.classe}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le prix == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Prix" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.prix}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.prix}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la promo == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Promo" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.promo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.promo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la quantité == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Quantité" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{champ.quantite}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{champ.quantite}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	        	 
+ 			<!-- == Colonne pour la suppression == -->
+			<!-- ================================= -->
+        	<p:column style="width:90px">
+        		<f:facet name="header">
+	 				Supprimer
+	 			</f:facet>
+            	<p:commandLink id="del" rerender="tab" action="product" actionListener="#{gestionProduitBean.supprimerAlcool}">	 					  
+	 				<f:param id="deleteAlcool" name="id" value="#{champ.idAlcool}"/>	 			 
+	 				<i class="pi pi-trash"/>				  	 					   
+	 			</p:commandLink>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la modification == -->
+			<!-- ================================== -->
+        	<p:column headerText="Modifier" style="width:90px">
+            	<p:rowEditor />
+            	<f:param id="updateid" name="id" value="#{champ.idAlcool}"/>
+            	<f:param id="updateDesignation" name="id" value="#{champ.designation}"/>
+            	<f:param id="updatePhoto" name="id" value="#{champ.photo}"/>
+            	<f:param id="updateDescription" name="id" value="#{champ.description}"/>           	
+            	<f:param id="updateClasse" name="id" value="#{champ.classe}"/> 
+            	<f:param id="updatePrix" name="id" value="#{champ.prix}"/>
+            	<f:param id="updatePromo" name="id" value="#{champ.promo}"/>
+            	<f:param id="updateQuantite" name="id" value="#{champ.quantite}"/>
+        	</p:column>
+        
+        
+    </p:dataTable>
+    	
+	<!-- == Element pour ajouter une catégorie == -->
+	<!-- ======================================== -->
+	<div style="display: block">
+		<h:commandButton value="Ajouter" />		
+	</div>
+	 
+ 	</h:form>
+
+	 </div>
+    
+    </c:if>
+     
+    <!-- =========================================================================================================== -->  
+	<!-- 									TABLEAU POUR LE SPIRITUEUX 												 -->
+	<!-- =========================================================================================================== -->     
+    <c:if test="#{gestionProduitBean.nomCat == 'spiritueux'}">
+    
+    	<div style=" display:block; width:80%; margin-left:200px; text-align: center; font-size: 10px">
+       	
+ 		
+ 		<h:form id="form">
+    	<p:growl id="msgs" showDetail="true"/>
+ 	
+    	<p:dataTable id="paniertab" value="#{gestionProduitBean.findAllSpiritueux()}" var="spiri" editable="true" style="margin-bottom:20px">
+        	<f:facet name="header">
+            	Gestionnaire des produits
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{gestionProduitBean.onRowEdit}" update=":form:msgs"/>
+        	<p:ajax event="rowEditCancel" listener="#{gestionProduitBean.onRowCancel}" update=":form:msgs"/>
+ 
+ 			<!-- == Colonne pour l'ID == -->
+			<!-- ======================= --> 
+        	<p:column style="width:50px;">
+        		<f:facet name="header">
+	 				<h:outputText value="ID" />
+	 			</f:facet>           	
+                <h:outputText value="#{spiri.idAlcool}"/>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le type == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Type" style="width:100px">
+                <h:outputText value="#{spiri.type.nomObjetCat}" />
+        	</p:column>
+ 
+ 			<!-- == Colonne pour la designation == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Designation" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.designation}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.designation}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la photo == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Photo" style="width:100px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.photo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.photo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+			<!-- == Colonne pour le pays == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Pays" style="width:90px">
+				<h:outputText value="#{spiri.pays.nomObjetCat}" />
+        	</p:column>
+
+        	<!-- == Colonne pour la description == -->
+			<!-- ================================= --> 
+        	<p:column headerText="Description" style="width:550px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.description}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.description}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la classe == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Classe" style="width:80px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.classe}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.classe}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour le prix == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Prix" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.prix}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.prix}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la promo == -->
+			<!-- ============================ --> 
+        	<p:column headerText="Promo" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.promo}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.promo}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la quantité == -->
+			<!-- ============================== --> 
+        	<p:column headerText="Quantité" style="width:70px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{spiri.quantite}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{spiri.quantite}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	        	 
+ 			<!-- == Colonne pour la suppression == -->
+			<!-- ================================= -->
+        	<p:column style="width:90px">
+        		<f:facet name="header">
+	 				Supprimer
+	 			</f:facet>
+            	<p:commandLink id="del" rerender="tab" action="product" actionListener="#{gestionProduitBean.supprimerAlcool}">	 					  
+	 				<f:param id="deleteAlcool" name="id" value="#{spiri.idAlcool}"/>	 			 
+	 				<i class="pi pi-trash"/>				  	 					   
+	 			</p:commandLink>
+        	</p:column>
+        	
+        	<!-- == Colonne pour la modification == -->
+			<!-- ================================== -->
+        	<p:column headerText="Modifier" style="width:90px">
+            	<p:rowEditor />
+            	<f:param id="updateid" name="id" value="#{spiri.idAlcool}"/>
+            	<f:param id="updateDesignation" name="id" value="#{spiri.designation}"/>
+            	<f:param id="updatePhoto" name="id" value="#{spiri.photo}"/>
+            	<f:param id="updateDescription" name="id" value="#{spiri.description}"/>           	
+            	<f:param id="updateClasse" name="id" value="#{spiri.classe}"/>
+            	<f:param id="updatePrix" name="id" value="#{spiri.prix}"/>
+            	<f:param id="updatePromo" name="id" value="#{spiri.promo}"/>
+            	<f:param id="updateQuantite" name="id" value="#{spiri.quantite}"/>
+        	</p:column>
+        
+        
+    </p:dataTable>
+    	
+	<!-- == Element pour ajouter une catégorie == -->
+	<!-- ======================================== -->
+	<div style="display: block">
+		<h:commandButton value="Ajouter" />		
+	</div>
+	
+ 
+ 	</h:form>
+
+	 </div>
+    
+    </c:if>
+	 
+
+</h:body> 
+</html>
+

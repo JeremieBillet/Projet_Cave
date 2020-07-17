@@ -56,13 +56,19 @@
             	<p:menuitem id="CatType" value="Type" action="categorie" 
             							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}"/>
         </p:menu> 
+        
         <h4 style="font-weight: bold;">Produits</h4>   	
         <p:menu style="background-color: white; border:none;">    	
-            	<p:menuitem value="Vin"/>
-            	<p:menuitem value="Champagne"/>
-            	<p:menuitem value="Bière"/>
-            	<p:menuitem value="Spiritueux"/>
-    	</p:menu>
+            	<p:menuitem id="vin" value="Vin" action="produit" 
+            						 			 actionListener="#{gestionProduitBean.findAllVin}"/>
+            	<p:menuitem id="champagne" value="Champagne" action="produit"
+            						 			 actionListener="#{gestionProduitBean.findAllChampagne}"/>
+            	<p:menuitem id="biere" value="Bière" action="produit"
+            						 			 actionListener="#{gestionProduitBean.findAllBiere}"/>
+            	<p:menuitem id="spiritueux" value="Spiritueux" action="produit"
+            						 			 actionListener="#{gestionProduitBean.findAllSpiritueux}"/>
+    		</p:menu>
+    		
     	<h4 style="font-weight: bold;">Commmandes</h4>
     		<p:menu style="background-color: white; border:none;">    	
             	<p:menuitem value="Rechercher une commande" action="findCommande"/>

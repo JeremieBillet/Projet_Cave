@@ -1,17 +1,7 @@
 package com.intiformation.projet.caveavin.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,10 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.UploadedFile;
 
 import com.intiformation.projet.caveavin.dao.CategorieDAOImpl;
 import com.intiformation.projet.caveavin.dao.ICategorieDAO;
@@ -33,7 +20,6 @@ import com.intiformation.projet.caveavin.modele.CatPays;
 import com.intiformation.projet.caveavin.modele.CatRegion;
 import com.intiformation.projet.caveavin.modele.CatType;
 import com.intiformation.projet.caveavin.modele.Categorie;
-import com.sun.xml.internal.txw2.Document;
 
 @ManagedBean(name="gestionCategorieBean")
 @SessionScoped
@@ -43,9 +29,6 @@ public class GestionCategorieBean implements Serializable{
 	private List<Categorie> listeCategorieBDD;
 	private Categorie categorie;
 	private CatType catType;
-	
-	// file upload de l'API servlet
-    private UploadedFile uploadedFile;
 	
 	private ICategorieDAO categorieDAO;
 	
@@ -249,81 +232,6 @@ public class GestionCategorieBean implements Serializable{
     }//end onRowCancel
 
 
-	/**
-     * sauvegarder une catégorie
-     * @param event
-     */
-    public void saveCategorie(ActionEvent event) {
-
-        //-------------------------------------------
-        // cas : ajout 
-        //-------------------------------------------
-        if (catType.getIdCategorie() == 0) {
-
-            try {
-                // traitement du fileUpload : recup du nom de l'image
-                String fileName = uploadedFile.getSubmittedFileName();
-                
-                // affectation du nom à  la prop urlImage du livre
-                catType.setPhoto(fileName);
-                
-                // ajout du livre dans la bdd
-                categorieDAO.add(catType);
-
-                //----------------------------------------------
-                // ajout de la photo dans le dossier images
-                //-----------------------------------------------
-                
-                // recup du contenu de l'image
-                InputStream imageContent = uploadedFile.getInputStream();
-
-                // recup de la valeur du param d'initialisation context-param de web.xml
-                FacesContext fContext = FacesContext.getCurrentInstance();
-                String pathTmp = fContext.getExternalContext().getInitParameter("file-upload");
-                
-                String filePath = fContext.getExternalContext().getRealPath(pathTmp);
-
-                // création du fichier image (conteneur de l'image) 
-                File targetFile = new File(filePath, fileName);
-
-                // instanciation du flux de sortie vers le fichier image
-                OutputStream outStream = new FileOutputStream(targetFile);
-                byte[] buf = new byte[1024];
-                int len;
-
-                while ((len = imageContent.read(buf)) > 0) {
-                    outStream.write(buf, 0, len);
-                }
-                
-                outStream.close();
-
-            } catch (IOException ex) {
-                Logger.getLogger(GestionCategorieBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        //-------------------------------------------
-        // cas : modif 
-        //-------------------------------------------
-        if (catType.getIdCategorie() != 0) {
-
-            if (uploadedFile != null) {
-
-                String fileNameToUpdate = uploadedFile.getSubmittedFileName();
-
-                if (!"".equals(fileNameToUpdate) && fileNameToUpdate != null) {
-
-                    // affectation du nouveau nom Ã  la prop urlImage de la categorie
-                    catType.setPhoto(fileNameToUpdate);
-                }
-            }
-
-            categorieDAO.update(catType);
-        }
-
-    }//end saveBook()
-	
-	
 	
 	/*__________ G / S ___________ */
 	
@@ -342,14 +250,6 @@ public class GestionCategorieBean implements Serializable{
 
 	public void setCatType(CatType catType) {
 		this.catType = catType;
-	}
-
-	public Part getUploadedFile() {
-		return uploadedFile;
-	}
-
-	public void setUploadedFile(Part uploadedFile) {
-		this.uploadedFile = uploadedFile;
 	}
 
 	public List<Categorie> getListeCategorieBDD() {
@@ -375,8 +275,6 @@ public class GestionCategorieBean implements Serializable{
 	public void setNomCat(String nomCat) {
 		this.nomCat = nomCat;
 	}
-	
-	
-	
+
 	
 }//end class

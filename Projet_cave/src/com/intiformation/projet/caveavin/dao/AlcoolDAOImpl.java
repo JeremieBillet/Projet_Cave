@@ -86,7 +86,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 				addCepageAlcool(idAlcool, ((Vin) pAlcool).getCepage());
 				
 			} else if (pAlcool instanceof Champagne) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?)");
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?, ?)");
 				
 				ps3.setInt(1, idAlcool);
 				ps3.setInt(2, ((Champagne) pAlcool).getType().getIdCategorie());
@@ -133,13 +133,10 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 	public boolean update(Alcool pAlcool) {
 
 		PreparedStatement ps1 = null;
-		PreparedStatement ps2 = null;
-		PreparedStatement ps3 = null;
-		
-		ResultSet rs2 = null;
+
 		
 		try {
-			ps1 = this.connection.prepareStatement("UPDATE alcools SET class_name=?, designation=?, description=?, prix=?, quantité=?, photo=?, annee=? WHERE id_alcool=?");
+			ps1 = this.connection.prepareStatement("UPDATE alcools SET class_name=?, designation=?, description=?, prix=?, quantité=?, photo=? WHERE id_alcool=?");
 			
 			int idAlcool = pAlcool.getIdAlcool();
 			
@@ -149,62 +146,11 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			ps1.setDouble(4, pAlcool.getPrix());
 			ps1.setInt(5, pAlcool.getQuantite());
 			ps1.setString(6, pAlcool.getPhoto());
-			if (pAlcool instanceof Vin) {
-				ps1.setInt(6, ((Vin) pAlcool).getAnnee());
-			} else if (pAlcool instanceof Champagne) {
-				ps1.setInt(6, ((Champagne) pAlcool).getAnnee());
-			} else {
-				ps1.setInt(6, 0);
-			}
-			ps1.setInt(1, idAlcool);
+
+			ps1.setInt(7, idAlcool);
 			
-			ps1.executeUpdate();
 			
-			ps2 = this.connection.prepareStatement("DELETE FROM alcools_categories WHERE alcool_id=?");
-			
-			ps2.setInt(1, idAlcool);
-			
-			ps2.executeUpdate();
-			
-			if (pAlcool instanceof Biere) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?)");
-				
-				ps3.setInt(1, idAlcool);
-				ps3.setInt(2, ((Biere) pAlcool).getPays().getIdCategorie());
-				ps3.setInt(3, idAlcool);
-				ps3.setInt(4, ((Biere) pAlcool).getType().getIdCategorie());
-				
-			} else if (pAlcool instanceof Spiritueux) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?)");
-				
-				ps3.setInt(1, idAlcool);
-				ps3.setInt(2, ((Spiritueux) pAlcool).getPays().getIdCategorie());
-				ps3.setInt(3, idAlcool);
-				ps3.setInt(4, ((Spiritueux) pAlcool).getType().getIdCategorie());
-				
-			} else if (pAlcool instanceof Vin) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?), (?,?)");
-				
-				ps3.setInt(1, idAlcool);
-				ps3.setInt(2, ((Vin) pAlcool).getPays().getIdCategorie());
-				ps3.setInt(3, idAlcool);
-				ps3.setInt(4, ((Vin) pAlcool).getRegion().getIdCategorie());
-				ps3.setInt(5, idAlcool);
-				ps3.setInt(6, ((Vin) pAlcool).getType().getIdCategorie());
-				
-				addCepageAlcool(idAlcool, ((Vin) pAlcool).getCepage());
-				
-			} else if (pAlcool instanceof Champagne) {
-				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?)");
-				
-				ps3.setInt(1, idAlcool);
-				ps3.setInt(2, ((Champagne) pAlcool).getType().getIdCategorie());
-				
-				addCepageAlcool(idAlcool, ((Champagne) pAlcool).getCepage());
-				
-			}
-			
-			int verifUpdate = ps3.executeUpdate();
+			int verifUpdate = ps1.executeUpdate();
 			
 			return (verifUpdate == 1);
 			
@@ -221,14 +167,6 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 					ps1.close();
 				}
 				
-				if (ps2 != null) {
-					ps2.close();
-				}
-				
-				if (ps3 != null) {
-					ps3.close();
-				}
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//end catch
@@ -238,6 +176,9 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 		return false;
 	}//end update()
 
+	
+	
+	
 	@Override
 	public boolean delete(Integer pIdAlcool) {
 
@@ -786,7 +727,6 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 			
 			rs = ps.executeQuery();
 			
-			Biere biere = null;
 			List<Biere> listeBieres = new ArrayList<>();
 			
 			CatPays pays = null;
@@ -818,9 +758,7 @@ public class AlcoolDAOImpl implements IAlcoolDAO {
 					
 				}//end while - rs2
 				
-				biere = new Biere(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, type);
-				
-				listeBieres.add(biere);
+				listeBieres.add(new Biere(id, classe, nom, description, prix, quantite, selectionne, photo, promo, pays, type));								
 				
 			}//end while rs
 			

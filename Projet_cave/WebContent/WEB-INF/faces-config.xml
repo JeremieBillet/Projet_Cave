@@ -121,6 +121,45 @@
 			<redirect/>
 		</navigation-case>
 		
+	</navigation-rule>
+		
+	<!-- . règle de navigation pour la page gestion-produit.xhtml -->
+	<!-- ================================================= -->
+	<navigation-rule>
+	
+		<!-- 1.1 page de départ -->
+		<from-view-id>/gestion-produit.xhtml</from-view-id>
+		
+		<!-- 1.2 cas de navigation de accueil-gestion vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.2.1 clé d'outcom -->
+			<from-outcome>product</from-outcome>
+			<!-- 1.2.2 destination -->
+			<to-view-id>/gestion-produit.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.3 cas de navigation de gestion-produit vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>category</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/gestion-categorie.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.4 cas de navigation de gestion-produit vers recherche-commande -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>search</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/recherche-commande.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+	
 	
 	</navigation-rule>
     
