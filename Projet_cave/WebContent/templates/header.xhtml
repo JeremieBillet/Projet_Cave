@@ -26,7 +26,7 @@
 		  <b:button type="submit" class="btn btn-default" icon="search" look="success"/>
 			</h:form>
 		  
-		  <c:if test=" #{AuthentificationBean.admin} == false || #{AuthentificationBean.client} == false ">
+		  <c:if test=" #{AuthentificationBean.admin == false} || #{AuthentificationBean.client == false} ">
 		  		<h:form>
 		  		<b:dropButton  value="Mon compte" styleClass="moncompte" style="margin: 0 30px;">
 		  			<label class="control-label">Username :</label>
@@ -40,7 +40,7 @@
 		  		</h:form>
 		  </c:if>
 		  
-		  <c:if test=" #{AuthentificationBean.admin} == true || #{AuthentificationBean.client} == true ">
+		  <c:if test=" #{AuthentificationBean.admin == true} || #{AuthentificationBean.client == true} ">
 		  		<h:form id="deconnection">
 		  			<b:commandButton type="submit" class="btn btn-primary" value="Se Déconnecter"/>
 		  		</h:form>
