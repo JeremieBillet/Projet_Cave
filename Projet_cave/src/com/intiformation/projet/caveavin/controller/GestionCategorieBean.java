@@ -19,12 +19,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.Part;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
 
 import com.intiformation.projet.caveavin.dao.CategorieDAOImpl;
 import com.intiformation.projet.caveavin.dao.ICategorieDAO;
@@ -45,7 +45,7 @@ public class GestionCategorieBean implements Serializable{
 	private CatType catType;
 	
 	// file upload de l'API servlet
-    private Part uploadedFile;
+    private UploadedFile uploadedFile;
 	
 	private ICategorieDAO categorieDAO;
 	
