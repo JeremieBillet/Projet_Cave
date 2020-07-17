@@ -1,0 +1,14 @@
+package com.intiformation.projet.caveavin.modele;
+
+public class Client {
+	
+	/*_____________________________ props _____________________________*/
+	
+	
+	/*_____________________________ ctors _____________________________*/
+	
+	
+	/*________________________ getters/setters ________________________*/
+	
+	
+}//end class

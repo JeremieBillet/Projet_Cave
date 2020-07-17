@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kb-project>
+ <depends-on-projects/>
+ <used-by-projects/>
+ <paths>
+  <path value="C:/Users/pifle/OneDrive/Bureau/Adaming/projet/projet_cave_a_vins/WebContent/WEB-INF/lib/mysql-connector-java-5.1.40-bin.jar"/>
+  <path value="C:/Users/pifle/OneDrive/Bureau/Adaming/projet/projet_cave_a_vins/WebContent/WEB-INF/lib/jstl-1.2.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/c-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/c-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/c.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/fmt-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/fmt-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/fmt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/fn.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/permittedtaglibs.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/scriptfree.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/sql-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/sql-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/sql.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/x-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/x-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-1.2.jar/meta-inf/x.tld" project="projet_cave_a_vins"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="/projet_cave_a_vins/WebContent/WEB-INF/faces-config.xml">
+   <libraries>
+    <library class="faces-config">
+     <id class="model-object"
+      path="FileSystems/WEB-INF/faces-config.xml" project="projet_cave_a_vins"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/Users/pifle/OneDrive/Bureau/Adaming/projet/projet_cave_a_vins/WebContent/WEB-INF/lib/jstl-impl-1.2.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/c-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/c-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/c.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/fmt-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/fmt-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/fmt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/fn.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/permittedtaglibs.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/scriptfree.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/sql-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/sql-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/sql.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/x-1_0-rt.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/x-1_0.tld" project="projet_cave_a_vins"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jstl-impl-1.2.jar/meta-inf/x.tld" project="projet_cave_a_vins"/>
+    </library>
+   </libraries>
+  </path>
+ </paths>
+ <validation>
+  <core validator-id="jsf-verification"/>
+  <core validator-id="jboss.jsf.core"/>
+  <el/>
+ </validation>
+ <aliases/>
+ <includes/>
+ <uris/>
+</kb-project>

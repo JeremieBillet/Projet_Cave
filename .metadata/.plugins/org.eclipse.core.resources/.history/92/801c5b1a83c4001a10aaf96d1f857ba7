@@ -1,0 +1,5 @@
+package com.intiformation.projet.caveavin.modele;
+
+public class Admin {
+
+}//end class

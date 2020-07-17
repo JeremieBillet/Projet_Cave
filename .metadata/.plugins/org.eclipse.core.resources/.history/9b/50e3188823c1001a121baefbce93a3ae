@@ -1,0 +1,39 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.util.List;
+
+import com.intiformation.projet.caveavin.modele.Alcool;
+
+public class AlcoolDAOImpl implements IAlcoolDAO {
+
+	@Override
+	public boolean add(Alcool pAlcool) {
+		return false;
+	}//end add()
+
+	@Override
+	public boolean update(Alcool pAlcool) {
+		return false;
+	}//end update()
+
+	@Override
+	public boolean delete(Integer pIdAlcool) {
+		return false;
+	}//end delete
+
+	@Override
+	public List<Alcool> getAll() {
+		return null;
+	}//end getAll()
+
+	@Override
+	public Alcool getById(Integer pIdAlcool) {
+		return null;
+	}//end getById()
+
+	@Override
+	public Alcool getByNom(String pNomAlcool) {
+		return null;
+	}//end getByNom()
+
+}//end class

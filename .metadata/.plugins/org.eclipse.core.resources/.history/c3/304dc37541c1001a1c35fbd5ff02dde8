@@ -1,0 +1,9 @@
+package com.intiformation.projet.caveavin.dao;
+
+import com.intiformation.projet.caveavin.modele.Alcool;
+
+public interface IAlcoolDAO extends IGeneralizable<Alcool> {
+	
+	public Alcool getByNom(String nom);
+
+}//end interface

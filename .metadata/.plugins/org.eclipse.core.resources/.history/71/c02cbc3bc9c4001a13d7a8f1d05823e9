@@ -1,0 +1,11 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.sql.Connection;
+
+import com.intiformation.projet.caveavin.tool.DBConnection;
+
+public class AdminDAOImpl {
+	
+	
+
+}//end class

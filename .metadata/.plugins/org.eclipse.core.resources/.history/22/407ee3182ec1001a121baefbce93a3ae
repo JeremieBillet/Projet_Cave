@@ -1,0 +1,20 @@
+package com.intiformation.projet.caveavin.modele;
+
+import java.util.List;
+
+public class Vin {
+	
+	/*_______________________________ props _______________________________*/
+	private int annee;
+	private Categorie pays;
+	private Categorie region;
+	private Categorie type;
+	private List<Categorie> cepages;
+	
+	/*_______________________________ ctors _______________________________*/
+	
+	
+	/*__________________________ getters/setters __________________________*/
+	
+
+}//end class

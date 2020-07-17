@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="new_projet_cave_a_vins">
+        <property name="context-root" value="new_projet_cave_a_vins"/>
+    </wb-module>
+</project-modules>

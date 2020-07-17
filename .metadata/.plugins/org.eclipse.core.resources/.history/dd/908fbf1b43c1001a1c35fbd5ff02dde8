@@ -1,0 +1,295 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+
+import com.intiformation.projet.caveavin.modele.Alcool;
+import com.intiformation.projet.caveavin.modele.Biere;
+import com.intiformation.projet.caveavin.modele.CatCepage;
+import com.intiformation.projet.caveavin.modele.Champagne;
+import com.intiformation.projet.caveavin.modele.Spiritueux;
+import com.intiformation.projet.caveavin.modele.Vin;
+
+public class AlcoolDAOImpl implements IAlcoolDAO {
+
+	@Override
+	public boolean add(Alcool pAlcool) {
+
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		
+		ResultSet rs2 = null;
+		
+		try {
+			ps1 = this.connection.prepareStatement("INSERT INTO alcools (class_name, designation, description, prix, quantité, photo, annee) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			
+			ps1.setString(1, pAlcool.getClass().getName());
+			ps1.setString(2, pAlcool.getDesignation());
+			ps1.setString(3, pAlcool.getDescription());
+			ps1.setDouble(4, pAlcool.getPrix());
+			ps1.setInt(5, pAlcool.getQuantite());
+			ps1.setBytes(6, pAlcool.getPhoto());
+			if (pAlcool instanceof Vin) {
+				ps1.setInt(6, ((Vin)pAlcool).getAnnee());
+			} else if (pAlcool instanceof Champagne) {
+				ps1.setInt(6, ((Champagne)pAlcool).getAnnee());
+			} else {
+				ps1.setInt(6, 0);
+			}
+			
+			
+			ps1.executeUpdate();
+			
+			ps2 = this.connection.prepareStatement("SELECT MAX(id_alcool) FROM alcools");
+			
+			rs2 = ps2.executeQuery();
+			
+			rs2.next();
+			
+			int idAlcool = rs2.getInt(1);
+			
+			if (pAlcool instanceof Biere) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Biere) pAlcool).getPays().getIdPays());
+				ps3.setInt(3, idAlcool);
+				ps3.setInt(4, ((Biere) pAlcool).getType().getIdType());
+				
+			} else if (pAlcool instanceof Spiritueux) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Spiritueux) pAlcool).getPays().getIdPays());
+				ps3.setInt(3, idAlcool);
+				ps3.setInt(4, ((Spiritueux) pAlcool).getType().getIdType());
+				
+			} else if (pAlcool instanceof Vin) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?), (?,?), (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Vin) pAlcool).getPays().getIdPays());
+				ps3.setInt(3, idAlcool);
+				ps3.setInt(4, ((Vin) pAlcool).getRegion().getIdRegion());
+				ps3.setInt(5, idAlcool);
+				ps3.setInt(6, ((Vin) pAlcool).getType().getIdType());
+				
+			} else if (pAlcool instanceof Champagne) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Champagne) pAlcool).getType().getIdType());
+				
+			}
+			
+			int verifUpdate = ps3.executeUpdate();
+			
+			return (verifUpdate == 1);
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("... Erreur lors de l'ajout de la bière / méthode add() ...");
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				if (ps1 != null) {
+					ps1.close();
+				}
+				
+				if (ps2 != null) {
+					ps2.close();
+				}
+				
+				if (ps3 != null) {
+					ps3.close();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//end catch
+			
+		}//end finally
+		
+		return false;
+	}//end add()
+
+	@Override
+	public boolean update(Alcool pAlcool) {
+
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		
+		ResultSet rs2 = null;
+		
+		try {
+			ps1 = this.connection.prepareStatement("UPDATE alcools SET class_name=?, designation=?, description=?, prix=?, quantité=?, photo=?, annee=? WHERE id_alcool=?");
+			
+			ps1.setString(1, pAlcool.getClass().getName());
+			ps1.setString(2, pAlcool.getDesignation());
+			ps1.setString(3, pAlcool.getDescription());
+			ps1.setDouble(4, pAlcool.getPrix());
+			ps1.setInt(5, pAlcool.getQuantite());
+			ps1.setBytes(6, pAlcool.getPhoto());
+			if (pAlcool instanceof Vin) {
+				ps1.setInt(6, ((Vin)pAlcool).getAnnee());
+			} else if (pAlcool instanceof Champagne) {
+				ps1.setInt(6, ((Champagne)pAlcool).getAnnee());
+			} else {
+				ps1.setInt(6, 0);
+			}
+			ps1.setInt(1, pAlcool.getIdAlcool());
+			
+			ps1.executeUpdate();
+			
+			ps2 = this.connection.prepareStatement("SELECT MAX(id_alcool) FROM alcools");
+			
+			rs2 = ps2.executeQuery();
+			
+			rs2.next();
+			
+			int idAlcool = rs2.getInt(1);
+			
+			if (pAlcool instanceof Biere) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Biere) pAlcool).getPays().getIdPays());
+				ps3.setInt(3, idAlcool);
+				ps3.setInt(4, ((Biere) pAlcool).getType().getIdType());
+				
+			} else if (pAlcool instanceof Spiritueux) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Spiritueux) pAlcool).getPays().getIdPays());
+				ps3.setInt(3, idAlcool);
+				ps3.setInt(4, ((Spiritueux) pAlcool).getType().getIdType());
+				
+			} else if (pAlcool instanceof Vin) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?), (?,?), (?,?), (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Vin) pAlcool).getPays().getIdPays());
+				ps3.setInt(3, idAlcool);
+				ps3.setInt(4, ((Vin) pAlcool).getRegion().getIdRegion());
+				ps3.setInt(5, idAlcool);
+				ps3.setInt(6, ((Vin) pAlcool).getType().getIdType());
+				
+			} else if (pAlcool instanceof Champagne) {
+				ps3 = this.connection.prepareStatement("INSERT INTO alcools_categories VALUES (?,?)");
+				
+				ps3.setInt(1, idAlcool);
+				ps3.setInt(2, ((Champagne) pAlcool).getType().getIdType());
+				
+			}
+			
+			int verifUpdate = ps3.executeUpdate();
+			
+			return (verifUpdate == 1);
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("... Erreur lors de l'ajout de la bière / méthode add() ...");
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				if (ps1 != null) {
+					ps1.close();
+				}
+				
+				if (ps2 != null) {
+					ps2.close();
+				}
+				
+				if (ps3 != null) {
+					ps3.close();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//end catch
+			
+		}//end finally
+		
+		return false;
+	}//end update()
+
+	@Override
+	public boolean delete(Integer pIdAlcool) {
+
+		PreparedStatement ps = null;
+		
+		try {
+			
+			ps = this.connection.prepareStatement("DELETE FROM alcools WHERE id_alcool=?");
+			
+			ps.setInt(1, pIdAlcool);
+			
+			int verifSuppr = ps.executeUpdate();
+			
+			return (verifSuppr == 1);
+			
+		} catch (SQLException e) {
+			System.out.println("... Erreur lors de la suppression / méthode delete() ...");
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				
+				if (ps != null) {
+					ps.close();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//end catch
+			
+		}//end finally block
+		
+		return false;
+	}//end delete
+
+	@Override
+	public List<Alcool> getAll() {
+		return null;
+	}//end getAll()
+
+	@Override
+	public Alcool getById(Integer pIdAlcool) {
+		return null;
+	}//end getById()
+
+	@Override
+	public Alcool getByNom(String pNomAlcool) {
+		return null;
+	}//end getByNom()
+
+	@Override
+	public List<CatCepage> getAllCepageByAlcool(Integer pIdAlcool) {
+		return null;
+	}
+
+	@Override
+	public boolean addCepageAlcool(Integer pIdAlcool, Integer pIdCepage) {
+		return false;
+	}
+
+	@Override
+	public boolean deleteCepageAlcool(Integer pIdAlcool, Integer pIdCepage) {
+		return false;
+	}
+
+
+}//end class

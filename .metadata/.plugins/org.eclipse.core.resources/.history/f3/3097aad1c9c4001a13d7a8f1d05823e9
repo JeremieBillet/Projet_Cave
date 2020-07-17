@@ -1,0 +1,14 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.sql.Connection;
+
+import com.intiformation.projet.caveavin.tool.DBConnection;
+
+public class AdminDAOImpl implements IAdminDAO{
+
+	@Override
+	public boolean isAdminExist(String userName, String motDePasse) {
+		return false;
+	}//end isAdminExist()
+
+}//end class

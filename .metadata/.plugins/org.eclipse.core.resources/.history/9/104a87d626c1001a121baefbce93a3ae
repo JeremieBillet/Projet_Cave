@@ -1,0 +1,15 @@
+package com.intiformation.projet.caveavin.modele;
+
+public class Vin {
+	
+	/*_______________________________ props _______________________________*/
+	private int annee;
+	
+	
+	/*_______________________________ ctors _______________________________*/
+	
+	
+	/*__________________________ getters/setters __________________________*/
+	
+
+}//end class

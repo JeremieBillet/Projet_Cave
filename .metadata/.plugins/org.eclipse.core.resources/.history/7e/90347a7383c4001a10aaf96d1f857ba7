@@ -1,0 +1,5 @@
+package com.intiformation.projet.caveavin.dao;
+
+public interface IClientDAO {
+
+}

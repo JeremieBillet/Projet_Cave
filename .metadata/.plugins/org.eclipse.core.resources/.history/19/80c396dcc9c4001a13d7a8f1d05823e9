@@ -1,0 +1,54 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.intiformation.projet.caveavin.modele.Client;
+
+public class ClientDAOImpl implements IClientDAO{
+
+	@Override
+	public boolean add(Client pClient) {
+		return false;
+	}//end add() - client
+
+	@Override
+	public boolean update(Client pClient) {
+		return false;
+	}//end update() - client
+
+	@Override
+	public boolean delete(Integer pIdClient) {
+		return false;
+	}//end delete() - client
+
+	@Override
+	public boolean isClientExist(String mail, String motDePasse) {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = this.connection.prepareStatement("SELECT COUNT(id_client) FROM clients WHERE email=? AND mot_de_passe=?");
+			
+			ps.setString(1, mail);
+			ps.setString(2, motDePasse);
+			
+			rs = ps.executeQuery();
+			
+			rs.next();
+			
+			int verifAdminExists = rs.getInt(1);
+			
+			return (verifAdminExists == 1);
+			
+		} catch (SQLException e) {
+			System.out.println("... Erreur lors de l'exécution de la méthode isClientExists() ...");
+			e.printStackTrace();
+		}//end catch
+		
+		return false;
+	}//end isClientExist()
+
+}//end class

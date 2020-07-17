@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Users\pifle\OneDrive\Bureau\Adaming\projet\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2523748519.index
+3369786297.index
+4176685086.index
+4285377261.index
+2392199889.index
+3585710987.index
+3331151549.index

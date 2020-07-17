@@ -1,0 +1,72 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.intiformation.projet.caveavin.modele.Alcool;
+
+public class AlcoolDAOImpl implements IAlcoolDAO {
+
+	@Override
+	public boolean add(Alcool pAlcool) {
+		return false;
+	}//end add()
+
+	@Override
+	public boolean update(Alcool pAlcool) {
+		return false;
+	}//end update()
+
+	@Override
+	public boolean delete(Integer pIdAlcool) {
+
+		PreparedStatement ps = null;
+		
+		try {
+			
+			ps = this.connection.prepareStatement("DELETE FROM alcools WHERE id_alcool=?");
+			
+			ps.setInt(1, pIdAlcool);
+			
+			int verifSuppr = ps.executeUpdate();
+			
+			return (verifSuppr == 1);
+			
+		} catch (SQLException e) {
+			System.out.println("... Erreur lors de la suppression / méthode delete() ...");
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				
+				if (ps != null) {
+					ps.close();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//end catch
+			
+		}//end finally block
+		
+		return false;
+	}//end delete
+
+	@Override
+	public List<Alcool> getAll() {
+		return null;
+	}//end getAll()
+
+	@Override
+	public Alcool getById(Integer pIdAlcool) {
+		return null;
+	}//end getById()
+
+	@Override
+	public Alcool getByNom(String pNomAlcool) {
+		return null;
+	}//end getByNom()
+
+}//end class

@@ -1,0 +1,14 @@
+package com.intiformation.projet.caveavin.dao;
+
+import java.util.List;
+
+import com.intiformation.projet.caveavin.modele.Alcool;
+import com.intiformation.projet.caveavin.modele.CatCepage;
+
+public interface IAlcoolDAO extends IGeneralizable<Alcool> {
+	
+	public Alcool getByNom(String nom);
+	
+	public List<CatCepage> getAllCepageByVin(Integer pIdAlcool);
+
+}//end interface
