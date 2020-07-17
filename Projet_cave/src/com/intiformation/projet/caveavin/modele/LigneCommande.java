@@ -8,23 +8,25 @@ public class LigneCommande {
 	private int alcoolId;
 	private int commandeId;
 	private int quantite;
-	private int prix;
+	private double prix;
 	
 	/*________________ CTORS _________________*/
 	
-	public LigneCommande(int idLigneCommande, int alcoolId, int commandeId, int quantite, int prix) {
+	public LigneCommande(int idLigneCommande, int alcoolId, int commandeId, int quantite, double prix) {
 		this.idLigneCommande = idLigneCommande;
 		this.alcoolId = alcoolId;
 		this.commandeId = commandeId;
 		this.quantite = quantite;
 		this.prix = prix;
 	}
-	public LigneCommande(int alcoolId, int commandeId, int quantite, int prix) {
+	public LigneCommande(int alcoolId, int commandeId, int quantite, double prix) {
 		this.alcoolId = alcoolId;
 		this.commandeId = commandeId;
 		this.quantite = quantite;
 		this.prix = prix;
 	}
+	
+
 	public LigneCommande() {
 	}	
 
@@ -54,10 +56,10 @@ public class LigneCommande {
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
-	public int getPrix() {
+	public double getPrix() {
 		return prix;
 	}
-	public void setPrix(int prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 	

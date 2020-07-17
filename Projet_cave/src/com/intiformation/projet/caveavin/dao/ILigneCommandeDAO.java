@@ -12,4 +12,6 @@ public interface ILigneCommandeDAO extends IGeneralizable<LigneCommande>{
 	 */
 	public List<LigneCommande> getAllByIdCommande(Integer id);
 	
+	public LigneCommande getLastLigneCommande();
+	
 }//end interface

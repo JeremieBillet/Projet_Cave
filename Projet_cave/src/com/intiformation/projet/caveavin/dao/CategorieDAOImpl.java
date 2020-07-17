@@ -70,21 +70,24 @@ public class CategorieDAOImpl implements ICategorieDAO{
 
 		try {
 			
-			ps = this.connection.prepareStatement("UPDATE categories SET class_name=? AND nom=? AND photo=? WHERE id_categorie=?");
+			ps = this.connection.prepareStatement("UPDATE categories SET class_name=?, nom=?, photo=? WHERE id_categorie=?");
 			
 			ps.setString(1, pCategorie.getClass().getSimpleName());
 			ps.setString(2, pCategorie.getNomObjetCat());
-			ps.setInt(4, pCategorie.getIdCategorie());
+			
+			int idCategorie = pCategorie.getIdCategorie();
 			
 			if (pCategorie instanceof CatType) {
 				
-				ps.setInt(3, ((CatType)pCategorie).getIdCategorie());
+				ps.setString(3, ((CatType)pCategorie).getPhoto());
 				
 			}else {
 				
-				ps.setInt(3, 0);
+				ps.setString(3, "");
 				
 			}//end else
+			
+			ps.setInt(4, idCategorie);
 			
 			int verif = ps.executeUpdate();
 

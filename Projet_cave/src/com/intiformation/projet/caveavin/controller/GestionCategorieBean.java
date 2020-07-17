@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,10 +21,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.Part;
 
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
+
 import com.intiformation.projet.caveavin.dao.CategorieDAOImpl;
 import com.intiformation.projet.caveavin.dao.ICategorieDAO;
+import com.intiformation.projet.caveavin.modele.CatCepage;
+import com.intiformation.projet.caveavin.modele.CatPays;
+import com.intiformation.projet.caveavin.modele.CatRegion;
 import com.intiformation.projet.caveavin.modele.CatType;
 import com.intiformation.projet.caveavin.modele.Categorie;
+import com.sun.xml.internal.txw2.Document;
 
 @ManagedBean(name="gestionCategorieBean")
 @SessionScoped
@@ -38,6 +49,11 @@ public class GestionCategorieBean implements Serializable{
 	
 	private ICategorieDAO categorieDAO;
 	
+	private String catEnCours; 
+	
+	private String nomCat;
+	
+	
 	/*__________ CTORS ___________ */	
 	/**
 	 * ctor vide pour l'instanciation du MB par le serveur
@@ -49,8 +65,7 @@ public class GestionCategorieBean implements Serializable{
 	/*__________ METHS ___________ */
 	
 	/**
-	 * permet de récupérer la liste de tous les éléments appartenant à une catégorie ds la bdd via la dao
-	 * la méthode est utilisée par le composant <h:datatable> de 'accueil-user.xhtml'
+	 * permet de récupérer la liste de tout les éléments de toutes les catégories
 	 * @return
 	 */
 	public List<Categorie> findAllCategorieBdd(){
@@ -63,113 +78,177 @@ public class GestionCategorieBean implements Serializable{
 	
 	
 	/**
-	 * permet de récupérer la liste de tous les éléments appartenant à une catégorie ds la bdd via la dao
-	 * la méthode est utilisée par le composant <h:datatable> de 'accueil-user.xhtml'
+	 * permet de récupérer la liste des éléments d'une catégorie
 	 * @return
 	 */
 	public void findAllCategorieByClassNameBdd(ActionEvent event){
 		
-		// 1. récup du param passé ds le composant au click sur un lien dans la page accueil-gestion
+		// 1. récup du nom de la catégorie qu'on veut afficher via l'id "Catxxx" du <p:menuitem>
 		String uip = event.getComponent().getId();
 		
-		// 2. récup de la valeur du paramètre
-		//String NomClass = (String) uip.getValue();
-		
-		// 3. appel de la méthode getByClassName		
+		// 2. appel de la méthode getByClassName		
 		listeCategorieBDD = categorieDAO.getByClassName(uip);
-			
+		
+		// 3. Envoi de la liste des catégories concernées dans la variable 'listeCategorieBDD'
 		setListeCategorieBDD(listeCategorieBDD);
+		// 4. Envoi du nom de la catégorie actuellement affichée dans la variable 'CatEnCours'
+		setCatEnCours(uip);
 		
 	}//end findAllCategorieByClassNameBdd()
 	
 	
 	/**
 	 * PERMET DE SUPPRIMER UN ELEMENT D'UNE CATEGORIE DS LA BDD.
-	 * invoquée au click sur le lien 'supprimer' de 'accueil-user.xhtml'.
+	 * invoquée au click sur le lien 'supprimer' de 'gestion-categorie.xhtml'.
 	 */
 	public void supprimerCategorie(ActionEvent event) {
 		
-		// 1. récup du param passé ds le composant au click sur le lien 'supprimer'
+		// récup du param passé ds le composant au click sur le lien 'supprimer'
 		UIParameter uip = (UIParameter) event.getComponent().findComponent("deleteID");
-		
-		// 2. récup de la valeur du paramètre
 		int CategorieID = (int) uip.getValue();
 		
-		// 3. suppression de l'élément ds la bdd via l'id
-		
-		// 3.1 récup du contexte de JSF
 		FacesContext contextJSF = FacesContext.getCurrentInstance();
 		
 		// 3.2 suppression du pays
 		if (categorieDAO.delete(CategorieID)) {
 			
 			//   SUPP OK
-			
-			// => envoi d'un message vers la vue via le context de JSF
 			contextJSF.addMessage(null, 
 								  new FacesMessage(FacesMessage.SEVERITY_INFO, 
 										  		   "suppression catégorie ", 
 										  		   " - la catégorie a été supprimé avec succés"));
 			
-			//=> redirection vers accueil-user.xhtml (réf : les clés d'outcom ds faces-config.xml)
-			
+			// Renvoi de la liste mise à jour
+			listeCategorieBDD = categorieDAO.getByClassName(catEnCours);			
+			setListeCategorieBDD(listeCategorieBDD);
 			
 		} else {
 			
 		//   SUPP NOT OK
-			
-			// => envoi d'un message vers la vue via le context de JSF
 						contextJSF.addMessage(null, 
 											  new FacesMessage(FacesMessage.SEVERITY_FATAL, 
 													  		   "suppression catégorie ", 
 													  		   " - la suppression de la catégorie a échoué"));
 						
-			//=> redirection vers accueil-user.xhtml (réf : les clés d'outcom ds faces-config.xml)
-
+			// Renvoi de la liste mise à jour
+			listeCategorieBDD = categorieDAO.getByClassName(catEnCours);						
+			setListeCategorieBDD(listeCategorieBDD);
+			
 		}//end else
 		
 	}//end supprimerCategorie
+
+	
+	/**
+	 * PERMET DAJOUTER UNE NOUVELLE CATEGORIE DANS LA BDD.
+	 * invoquée au click sur le bouton 'ajouter' de 'gestion-categorie.xhtml'.
+	 */
+	public void ajouterCategorie(){
+	
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		Categorie cat = null;
+		
+		if(catEnCours.equals("CatPays")) {
+			
+			cat = new CatPays(nomCat);
+						
+		}if(catEnCours.equals("CatRegion")) {
+			
+			cat = new CatRegion(nomCat);
+						
+		}if(catEnCours.equals("CatCepage")) {
+			
+			cat = new CatCepage(nomCat);
+						
+		}if(catEnCours.equals("CatType")) {
+			
+			cat = new CatType(nomCat);	
+		
+		}//end if
+		
+		// 2. ajout du nv livre à la bdd via la dao
+		if(categorieDAO.add(cat)) {
+			
+			// AJOUT OK			
+			// -> envoi d'un message vers la vue accueil.xhtml
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+					"Ajout Categorie :", " - La Categorie a été ajouté avec succès"));			
+			listeCategorieBDD = categorieDAO.getByClassName(catEnCours);			
+			setListeCategorieBDD(listeCategorieBDD);
+			
+			
+		} else {
+			
+			// AJOUT NOT OK			
+			// -> envoi d'un message vers la vue gestion-categorie.xhtml
+			FacesMessage messageAddNotOk = new FacesMessage(FacesMessage.SEVERITY_FATAL, 
+					"Ajout categorie ", " - L'ajout de la categorie a échoué");			
+			listeCategorieBDD = categorieDAO.getByClassName(catEnCours);			
+			setListeCategorieBDD(listeCategorieBDD);
+
+		}//end else
+
+	}// end ajouterCategorie()
 	
 	
 	/**
-	 * PERMET D'EDITER UNE CATEGORIE A MODIFIER DS LA BDD.
-	 * invoquée au click sur le lien 'editer' de 'accueil-user.xhtml'.
+	 * PERMET DE MODIFIER UNE CATEGORIE DANS LA BDD
+	 * @param event
 	 */
-	public void selectionnerCategorie(ActionEvent event) {
+	
+	public void onRowEdit(RowEditEvent event) {
 		
-		// 1. récup du param passé au composant au click sur le lien 'editer'
-		UIParameter uip = (UIParameter) event.getComponent().findComponent("updateID");
-		
-		// 2. récup de la valeur du param (l'id de l'élément à éditer)
+		// récup de la valeur du param (l'id de l'élément à éditer)
+        UIParameter uip = (UIParameter) event.getComponent().findComponent("updateID");		
 		int categorieID = (int) uip.getValue();
+        System.out.println(categorieID);
+        
+        // récup de la valeur du param (le nouveau nom de l'élément à éditer)
+        UIParameter name = (UIParameter) event.getComponent().findComponent("updateNom");				
+		String categorieNom = (String) name.getValue();
+		System.out.println(categorieNom);
+        
+        FacesContext contextJSF = FacesContext.getCurrentInstance();
+
+        // application du nouveau nom à la catégorie
+		Categorie catToUpdate = categorieDAO.getById(categorieID);
+		catToUpdate.setNomObjetCat(categorieNom);
 		
-		// 3. récup de la région à éditer via l'id ds la bdd
-		Categorie CategorieAEditer = categorieDAO.getById(categorieID);
+		// appel de la couche DAO pour l'update
+		categorieDAO.update(catToUpdate);
+		System.out.println(catToUpdate.getNomObjetCat());
 		
-		// 4. affectation de l'élément à editer à la variable 'Categorie' du MB
-		setCategorie(CategorieAEditer);
+		// Test + message
+		if (categorieDAO.update(catToUpdate)) {
+			
+			// MODIF OK			
+			// -> message vers la vue
+			FacesMessage messageOk = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						"Modification réusiie ", " - La catégorie a été modifiée avec succès");			
+			// envoi du message 
+			contextJSF.addMessage(null, messageOk);
+
+		} else {
+			
+			// MODIF NOT OK			
+			// -> message vers la vue
+			FacesMessage messageNotOk = new FacesMessage(FacesMessage.SEVERITY_FATAL, 
+						"ECHEC DE LA MODIFICATION ", " - La modification de la catégorie a échoué");						
+			// envoi du message 
+			contextJSF.addMessage(null, messageNotOk);
+
+		}//end else
 		
-		// 5. redirection vers la page d'édition 'editer-categorie.xhtml' (réf : la clé d'outcom 'editbook' du faces-config.xml)
-		
-	}//end selectionnerCategorie()
-	
-	
-	/**
-	 * PERMET D'INITIALISER UN NOUVEL OBJET CATEGORIE VIDE.
-	 * invoquée au click sur le bouton 'ajouter une nouvelle catégorie' de 'accueil-user.xhtml'.
-	 */
-	public void initialiserCategorie(ActionEvent event) {
-		
-		// 1. instanciation d'un nouveau objet de type 'Categorie'
-		Categorie categorieAdd = new Categorie();
-		
-		// 2. affectation du pays à la prop de 'categorie' du MB
-		// ---> cet objet va réceptionner les infos de la catégorie envoyées à partir du formulaire d'ajout 'ajouter-categorie.xhtml'
-		setCategorie(categorieAdd);
-		
-	}//end initialiserCategorie
-	
-	
+    }//end onRowEdit
+     
+
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled");
+        FacesContext.getCurrentInstance().addMessage(null, msg);             
+    }//end onRowCancel
+
+
 	/**
      * sauvegarder une catégorie
      * @param event
@@ -280,6 +359,24 @@ public class GestionCategorieBean implements Serializable{
 	public void setListeCategorieBDD(List<Categorie> listeCategorieBDD) {
 		this.listeCategorieBDD = listeCategorieBDD;
 	}
+
+	public String getCatEnCours() {
+		return catEnCours;
+	}
+
+	public void setCatEnCours(String catEnCours) {
+		this.catEnCours = catEnCours;
+	}
+
+	public String getNomCat() {
+		return nomCat;
+	}
+
+	public void setNomCat(String nomCat) {
+		this.nomCat = nomCat;
+	}
+	
+	
 	
 	
 }//end class

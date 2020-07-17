@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+	<h:outputStylesheet library = "css" name = "style_perso.css"/>
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+	<style>
+    	
+		.photo{
+			
+			width : 100%;
+			height : 200px;
+			overflow: hidden;
+		 	background: url(./resources/images/fond-categorie2.jpg) no-repeat 0 70%;
+		 	background-size: cover;
+		}
+		
+     </style>
+
+</h:head> 
+<h:body> 
+
+	<div id="header">
+		 <ui:insert name="header">
+		 	<ui:include src="/templates/header.xhtml" />
+		 </ui:insert> 
+	 </div>
+	 
+	<br/><br/>
+	
+	<b:flyOutMenu styleClass="sidebar">
+	
+	<h:form style="margin-top:-20px; margin-left: 10px">  
+		<h3>Menu de gestion</h3>
+		<br/>
+    	<h4 style="font-weight: bold;">Catégories</h4>
+    	<p:menu style="background-color: white; border:none;">
+            	<p:menuitem id="CatPays" value="Pays" action="rechToCat" 
+            							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}">
+            	</p:menuitem>	 			
+            	<p:menuitem id="CatRegion" value="Région" action="rechToCat"
+            							   actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}">
+            	</p:menuitem>
+            	<p:menuitem id="CatCepage" value="Cépage" action="rechToCat" 
+            							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}"/>
+            	<p:menuitem id="CatType" value="Type" action="categorie" 
+            							 actionListener="#{gestionCategorieBean.findAllCategorieByClassNameBdd}"/>
+        </p:menu> 
+        <h4 style="font-weight: bold;">Produits</h4>   	
+        <p:menu style="background-color: white; border:none;">    	
+            	<p:menuitem value="Vin"/>
+            	<p:menuitem value="Champagne"/>
+            	<p:menuitem value="Bière"/>
+            	<p:menuitem value="Spiritueux"/>
+    	</p:menu>
+    	<h4 style="font-weight: bold;">Commmandes</h4>
+    	<p:menu style="background-color: white; border:none;">    	
+            <p:menuitem value="Rechercher une commande" action="findCommande"/>
+    	</p:menu>
+    </h:form>
+
+      </b:flyOutMenu>	
+      
+      
+            
+    	<div style=" display:block; margin-left: 300px;">
+    	Ce menu permet d'effectuer des recherches sur les commandes passées. <br/>
+    	Vous pouvez ainsi : <br/><br/>
+    		- Retrouver une commande à partir de son Id.<br/>
+    		- Retrouver la liste des commandes passées par un client à partir de l'id du client.<br/>
+    		- Retrouver la dernière commande passée par un client. <br/>
+    	</div>
+    	
+    	<br/><br/>
+    	<h:form id="form">
+    	<p:growl id="msgs" showDetail="true"/>
+    	<div style=" display:block; margin-left: 300px;">
+    		<h3>Recherche par ID de commande</h3>
+    	<div class="p-formgroup-inline">
+        	<div class="p-field">
+            	<p:outputLabel for="idCommande" styleClass="ui-sr-only" value="Saisir l'id : "/>
+            	<p:inputText id="idCommande" placeholder="ID de commande"  style="margin-left:20px;"/>       	
+        	</div>
+        <br/>
+        <p:commandButton value="Rechercher" action="rech" actionListener="#{rechercheCommandeBean.findCommandeById}"/>        
+        </div>
+        
+      	<br/>
+        <p:dataTable value="#{rechercheCommandeBean.commande}" var="com" style="margin-bottom:20px">
+
+		    <p:column headerText="Id de la commande" style="width:150px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{com.idCommande}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{com.idCommande}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	<p:column headerText="Id du client" style="width:150px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{com.clientId}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{com.clientId}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	<p:column headerText="Date de la commande" style="width:150px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{com.dateCommande}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{com.dateCommande}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+		    
+		</p:dataTable>
+        
+        <br/>
+
+        <h3>Recherche par ID du client</h3>
+    	<div class="p-formgroup-inline">
+        	<div class="p-field">
+            	<p:outputLabel for="idClient" styleClass="ui-sr-only" value="Saisir l'id : "/>
+            	<p:inputText id="idClient" placeholder="ID du client"  value="#{rechercheCommandeBean.commande.clientId}" style="margin-left:20px;"/>
+            </div>
+            <br/>
+            <div class="p-field-checkbox">
+        		<p:selectBooleanCheckbox id="all" />
+        		<p:outputLabel for="all" value="Toutes les commandes" style="margin-left:10px;"/>
+    		</div>
+    		<div class="p-field-checkbox">
+        		<p:selectBooleanCheckbox id="last" />
+        		<p:outputLabel for="last" value="La dernière commande passée" style="margin-left:10px;"/>
+    		</div>
+    		<br/>      	
+        	<p:commandButton value="Rechercher" actionListener="#{rechercheCommandeBean.findCommandeByClient}"/>       
+    	</div>
+    	
+    	<br/>
+        <p:dataTable value="#{rechercheCommandeBean.commande}" var="com" style="margin-bottom:20px">
+
+		    <p:column headerText="Id de la commande" style="width:150px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{com.idCommande}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{com.idCommande}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	<p:column headerText="Id du client" style="width:150px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{com.clientId}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{com.clientId}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+        	<p:column headerText="Date de la commande" style="width:150px">
+        		<p:cellEditor>
+                	<f:facet name="output"><h:outputText value="#{com.dateCommande}" /></f:facet>
+                	<f:facet name="input"><p:inputText value="#{com.dateCommande}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+        	</p:column>
+		    
+		</p:dataTable>
+    	</div>
+		</h:form>
+
+</h:body> 
+</html>
