@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head></h:head> 
+<body> 
+
+	<ui:composition>
+	
+	<h:form>
+		<b:flyOutMenu styleClass="sidebar">
+			<h:commandLink action="#{produitBean.initFilter()}" value="Initialiser" />
+			<h4>Filtrer</h4>
+			
+			
+			<label class="control-label">Prix Max</label>
+			<!--  <b:slider2 min="0" max="500" span="7" label="Prix"/> -->
+			<h:panelGrid columns="1" style="width : 80%; margin :2% 10%;">
+			<h:commandLink id="actualiser" value="actualiser" action="#{produitBean.filterByPrix()}" />
+		        <h:outputText id="output" value="#{produitBean.prixFiltre} €" />
+		        <h:inputHidden id="txt2" value="#{produitBean.prixFiltre}" />
+		        <p:slider for="txt2" display="output" style="width: 100%; " displayTemplate="{value} €" maxValue="#{produitBean.prixMax}" >
+		        	<p:ajax event="slideEnd" listener="#{produitBean.onSlideEnd}" update="actualiser"/>
+		        </p:slider>
+		        
+		    </h:panelGrid>
+			<br/>
+			
+			
+			<c:if test="#{produitBean.produitRecherche eq 'Vin'}">
+				<label class="control-label">Pays</label>
+				<ui:repeat value="#{produitBean.listePaysVin}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterVinByPays(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+				
+				<label class="control-label">Regions</label>
+				<ui:repeat value="#{produitBean.listeRegionVin}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterVinByRegion(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+				
+				<label class="control-label">Types</label>
+				<ui:repeat value="#{produitBean.listeTypeVin}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterVinByType(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+			</c:if>
+			
+			<c:if test="#{produitBean.produitRecherche eq 'Champagne'}">
+				<label class="control-label">Types</label>
+				<ui:repeat value="#{produitBean.listeTypeChampagne}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterChampagneByType(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+			</c:if>
+			
+			<c:if test="#{produitBean.produitRecherche eq 'Spiritueux'}">
+				<label class="control-label">Pays</label>
+				<ui:repeat value="#{produitBean.listePaysSpiritueux}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterSpiritueuxByPays(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+				
+				<label class="control-label">Types</label>
+				<ui:repeat value="#{produitBean.listeTypeSpiritueux}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterSpiritueuxByType(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+			</c:if>
+			
+			<c:if test="#{produitBean.produitRecherche eq 'Bière'}">
+				<label class="control-label">Pays</label>
+				<ui:repeat value="#{produitBean.listePaysBiere}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterBiereByPays(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+				
+				<label class="control-label">Types</label>
+				<ui:repeat value="#{produitBean.listeTypeBiere}" var="cat">
+					<b:navCommandLink value="#{cat.nomObjetCat}" action="#{produitBean.filterBiereByType(cat.idCategorie)}"/>
+				</ui:repeat>
+				<br/>
+			</c:if>
+				
+				
+		  	
+		
+		</b:flyOutMenu>	
+	</h:form>	
+				
+	</ui:composition>
+	
+	
+	
+
+</body> 
+</html>

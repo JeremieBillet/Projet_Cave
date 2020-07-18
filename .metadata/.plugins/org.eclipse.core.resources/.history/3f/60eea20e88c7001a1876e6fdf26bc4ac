@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      > 
+
+<h:head>
+	<title>la divine boisson</title>
+	
+	<h:outputStylesheet library = "css" name = "style_perso.css"/>
+	
+	<style>
+    	
+        .photo {
+			width: 100%;
+			height: 200px;
+			overflow: hidden;
+			background: url(./resources/images/vin-rouge.webp) no-repeat 0 70%;
+			background-size: cover;
+		}
+		
+			
+     </style>
+     
+     
+     <h:outputScript library = "js" name = "script_perso.js"/>
+
+</h:head> 
+<h:body> 
+
+	<div id="header">
+		 <ui:insert name="header">
+		 	<ui:include src="/templates/header.xhtml" />
+		 </ui:insert> 
+	 </div>
+
+	
+	
+	<div id="singleContainer">
+		
+		<h1 id="singleDesignation">#{singlebottleBean.alcool.designation}</h1>
+		
+		<div id="singleContainerPhoto">
+		<b:image value="#{singlebottleBean.alcool.photo}"  class="photoitem" id="singlePhoto"/>
+		</div>
+		<div id="singleCaracteristique">
+			<h2 id="singlePrix">#{singlebottleBean.alcool.prix} €</h2>
+			<h:form>
+			<h:commandButton class="btn pull-right btn-primary" actionListener="#{panierBean.ajouterAuPanier()}" value="Ajouter au panier" >
+				<f:attribute name="bouteille" value="#{singlebottleBean.alcool.idAlcool}"/>
+			</h:commandButton>
+			</h:form>
+			<br/><br/>
+			
+			<label class="control-label">Caractéristique :</label>
+			<c:if test="#{singlebottleBean.vin != null}">
+				<p>Région : #{singlebottleBean.vin.region.nomObjetCat}.</p>
+				<p>Année : #{singlebottleBean.vin.annee}.</p>
+				<p>Cépages : <ui:repeat var="cepage" value="#{singlebottleBean.vin.cepage}">  - #{cepage.nomObjetCat}</ui:repeat>.</p>
+				<p>Couleur : #{singlebottleBean.vin.type.nomObjetCat}.</p>
+			</c:if>
+			<c:if test="#{singlebottleBean.champagne != null}">
+				<p>Année : #{singlebottleBean.champagne.annee}.</p>
+				<p>Cépages : <ui:repeat var="cepage" value="#{singlebottleBean.champagne.cepage}">  - #{cepage.nomObjetCat}</ui:repeat>.</p>
+				<p>Type : #{singlebottleBean.champagne.type.nomObjetCat}.</p>
+			</c:if>
+			<c:if test="#{singlebottleBean.spiritueux != null}">
+				<p>Type : #{singlebottleBean.spiritueux.type.nomObjetCat}.</p>
+				<p>Pays : #{singlebottleBean.spiritueux.pays.nomObjetCat}.</p>
+			</c:if>
+			<c:if test="#{singlebottleBean.biere != null}">
+				<p>Type : #{singlebottleBean.biere.type.nomObjetCat}.</p>
+				<p>Pays : #{singlebottleBean.biere.pays.nomObjetCat}.</p>
+			</c:if>
+			<br/>
+			
+			<label class="control-label">Description :</label>
+			<p>#{singlebottleBean.alcool.description}</p>
+			
+			
+			
+		</div>
+	
+	</div>
+	
+
+</h:body> 
+</html>

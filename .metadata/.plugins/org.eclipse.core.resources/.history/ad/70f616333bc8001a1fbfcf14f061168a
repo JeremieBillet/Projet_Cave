@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head>
+	
+	
+</h:head> 
+<h:body> 
+
+
+
+	<ui:composition>
+		<b:navBar brand="La divine boisson" fluid="true">
+	
+		
+		  <div class="navbar-form navbar-right">
+		  <h:form>
+		    <b:inputText type="text" class="form-control" placeholder="Rechercher"/>
+		  
+		  <b:button type="submit" class="btn btn-default" icon="search" look="success"/>
+			</h:form>
+		  
+		  
+		  <h:form>
+		  <c:if test="#{!AuthentificationBean.admin and !AuthentificationBean.client}">
+		  <b:dropButton id="dropDownConnection" value="Mon compte" styleClass="moncompte" style="margin: 0 30px;">
+		  		<label class="control-label">Username :</label>
+      			<b:inputText placeholder="Username" value="#{AuthentificationBean.identifiant}"/>
+      			<label class="control-label">Password :</label>
+      			<b:inputText placeholder="Password" value="#{AuthentificationBean.password}"/>
+      			<h:messages globalOnly="true" layout="table" showDetail="true" style="font-weight: bold; color: red;"/>
+      			<b:commandButton action="#{AuthentificationBean.connectUser}" class="btn btn-primary" value="Se Connecter" >
+      				<f:ajax update="@all"/>
+      			</b:commandButton>
+      			<b:commandLink action="#" value="créer un compte"/>
+		  
+		  </b:dropButton>
+		  </c:if>
+		  <c:if test="#{AuthentificationBean.admin or AuthentificationBean.client}">
+		  <b:commandButton value="Déconnexion" action="#{AuthentificationBean.deconnectUser()}" style="margin: 0 30px;">
+		  		
+		  </b:commandButton>
+		  </c:if>
+		  </h:form>
+		  
+		  <h:form>
+		  <b:link outcome="panier?faces-redirect=true}"><b:image value="/resources/images/basket.webp" height ="35px" /></b:link>
+		  </h:form>
+		  
+		  </div>
+		 
+		  
+	
+	</b:navBar>
+	
+	
+	<h:form> 	 
+	    <p:megaMenu model="#{produitBean.model}" />
+	</h:form>
+	
+	
+	
+	<div class="photo"></div>
+	
+	
+	</ui:composition>
+	
+	<!--  
+	<nav id="j_idt6" class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#j_idt6_inner">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button><a class="navbar-brand" href="#"><span>La divine boisson</span></a>
+			</div>
+			<div id="j_idt6_inner" class="collapse navbar-collapse navbar-ex1-collapse">
+			</div>
+		</div>
+	</nav>
+	-->
+	
+	
+	<!-- 
+<ul class="dropdown-menu" role="menu" aria-labelledby="dtLj_idt82:j_idt84">
+	Username:
+	<div id="j_idt82:j_idt87" class="form-group ">
+		<input id="input_j_idt82:j_idt87" name="input_j_idt82:j_idt87" type="text" class="form-control" placeholder="Username" />
+	</div>
+	Password
+	<div id="j_idt82:j_idt89" class="form-group ">
+		<input id="input_j_idt82:j_idt89" name="input_j_idt82:j_idt89" type="text" class="form-control" placeholder="Password" />
+	</div>
+	<button id="j_idt82:j_idt90" name="j_idt82:j_idt90" type="button" class="btn btn-default btn btn-primary">Se Connecter</button>
+	<a id="j_idt82:j_idt151" href="#" tabindex="0">créer un compte</a>
+</ul>
+ -->
+	
+	 <!-- 
+	<div id="j_idt34:j_idt56" class="ui-menu ui-menubar ui-megamenu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix centeredMenuBar" role="menubar">
+		<div tabindex="0" class="ui-helper-hidden-accessible">
+		</div>
+		<ul class="ui-menu-list ui-helper-reset">
+			<li class="ui-widget ui-menuitem ui-corner-all ui-menu-parent labelMenu" role="menuitem" aria-haspopup="true">
+				<a href="#" class="ui-menuitem-link ui-submenu-link ui-corner-all" tabindex="-1">
+					<span class="ui-menuitem-text">Vin</span>
+					<span class="ui-icon ui-icon-triangle-1-s"></span>
+				</a>
+		<ul class="ui-widget-content ui-menu-list ui-corner-all ui-helper-clearfix ui-menu-child ui-shadow" role="menu">
+			<table role="presentation">
+				<tbody>
+					<tr>
+						<td>
+							<ul class="ui-menu-list ui-helper-reset" role="menu">
+								<li class="ui-widget-header ui-corner-all labelCat">
+									<span>Régions</span>
+								</li>
+								<li class="ui-menuitem ui-widget ui-corner-all" role="menuitem">
+									<a tabindex="-1" class="ui-menuitem-link ui-corner-all" href="#" onclick="PrimeFaces.ab({s:&quot;j_idt34:j_idt13&quot;,f:&quot;j_idt34&quot;});return false;">
+										<span class="ui-menuitem-text">Bordeaux</span>
+									</a>
+								</li>
+								<li class="ui-menuitem ui-widget ui-corner-all" role="menuitem">
+	
+	 -->
+
+</h:body> 
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+	<title>la divine boisson</title>
+
+	<h:outputStylesheet library="css" name="style_perso.css" />
+
+	<style>
+.photo {
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+	background: url(./resources/images/vin-rouge.webp) no-repeat 0 70%;
+	background-size: cover;
+}
+</style>
+
+
+	<h:outputScript library="js" name="script_perso.js" />
+
+</h:head>
+<h:body>
+
+
+
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+	<h:form>
+	<div id="panierContainer">
+	<c:if test="#{AuthentificationBean.client}">
+	<b:commandButton value="Commander" action="#{panierBean.commander()}" class="btn btn-primary pull-right"/>
+	</c:if>
+	<c:if test="#{!AuthentificationBean.client}">
+	<b:button value="Connecter vous pour commander"  class="btn btn-info pull-right" onclick="dropDownFunction();"/>
+	</c:if>
+		<h1 id="panierTitle">Mon panier</h1>
+		
+	
+		<p:dataTable var="article" value="#{panierBean.mapPanier}">
+		    <p:column headerText=" " style="width : 12%;">
+		    	<div class="conteneurphoto">
+					<b:image value="#{article.key.photo}" class="photoitem" style="max-height : 80px;" />
+				</div>
+		    </p:column>
+		 
+		    <p:column headerText="Désignation" style="width : 30%; text-align : center;">
+		        <h:outputText value="#{article.key.designation}" />
+		    </p:column>
+		 
+		    <p:column headerText="PU (€)" style="width : 10%;">
+		        <h:outputText value="#{article.value.prix}" />
+		    </p:column>
+		 
+		    <p:column headerText="Quantité" style="width : 10%;">
+		        <p:spinner min="1" value="#{article.value.quantite}" immediate="true" onchange="#{panierBean.updatePrixTotal()}">
+		        	<p:ajax event="valueChange" update="@form"/>
+		        </p:spinner>
+		    </p:column>
+		    
+		    <p:column headerText="Prix Total" style="width : 10%;" >
+		        <h:outputText value="#{article.value.prix*article.value.quantite}" />
+		    </p:column>
+		    <p:column headerText=" " style="width : 6%;" >
+		    	<h:commandLink action="#{panierBean.supprArticle(article.key)}" value="suppr" />
+		    </p:column>
+		</p:dataTable>
+		
+		
+			<div id="panierSubTable">
+				<div id="panierRow">
+					<div id="panierCol1">Frais de port</div>
+					<div id="panierCol2">xxx</div>
+				</div>
+				<div id="panierRow">
+					<div id="panierCol1" class="ui-state-default">Total</div>
+					<div id="panierCol2">#{panierBean.prixTotal}</div>
+				</div>
+			</div>
+		
+	
+	</div>
+	</h:form>
+	
+	
+	<script>
+	$(document).ready(function(){
+		function dropDownFunction() { // on a click on the button
+			$('.dropdown-toggle').dropdown()
+		}
+	}
+	</script>
+
+<!--  
+	<div id="j_idt30:paniertable" class="ui-datatable ui-widget">
+	<div class="ui-datatable-tablewrapper"><table role="grid">
+	<thead id="j_idt30:paniertable_head">
+	<tr role="row">
+	<th id="j_idt30:paniertable:j_idt33" class="ui-state-default" role="columnheader" aria-label=" " scope="col" style="width : 12%;"><span class="ui-column-title"> </span></th>
+	<th id="j_idt30:paniertable:j_idt37" class="ui-state-default" role="columnheader" aria-label="Désignation" scope="col" style="width : 35%; text-align : center;"><span class="ui-column-title">Désignation</span></th>
+	<th id="j_idt30:paniertable:j_idt39" class="ui-state-default" role="columnheader" aria-label="PU (€)" scope="col" style="width : 10%;"><span class="ui-column-title">PU (€)</span></th>
+	<th id="j_idt30:paniertable:j_idt41" class="ui-state-default" role="columnheader" aria-label="Quantité" scope="col" style="width : 8%;"><span class="ui-column-title">Quantité</span></th>
+	<th id="j_idt30:paniertable:j_idt43" class="ui-state-default" role="columnheader" aria-label="Prix Total" scope="col" style="width : 10%;"><span class="ui-column-title">Prix Total</span></th>
+	</tr></thead>
+	<tbody id="j_idt30:paniertable_data" class="ui-datatable-data ui-widget-content">
+	<tr data-ri="0" class="ui-widget-content ui-datatable-even" role="row"
+	><td role="gridcell" style="width : 12%;">
+		    	<div class="conteneurphoto">
+		    	<img id="j_idt30:paniertable:0:j_idt35" src="/Projet_cave/resources/photo/trapet.png" style="max-height : 80px;" class="photoitem  " draggable="true" />
+				</div>
+				</td>
+				<td role="gridcell" style="width : 35%; text-align : center;">DOMAINE TRAPET</td>
+				<td role="gridcell" style="width : 10%;">150.0</td>
+				<td role="gridcell" style="width : 8%;"><span id="j_idt30:paniertable:0:j_idt42" class="ui-spinner ui-widget ui-corner-all">
+				<input id="j_idt30:paniertable:0:j_idt42_input" name="j_idt30:paniertable:0:j_idt42_input" type="text" class="ui-spinner-input ui-inputfield ui-state-default ui-corner-all" autocomplete="off" value="5" onchange="PrimeFaces.ab({s:&quot;j_idt30:paniertable:0:j_idt42&quot;,e:&quot;valueChange&quot;,f:&quot;j_idt30&quot;,p:&quot;j_idt30:paniertable:0:j_idt42&quot;,u:&quot;j_idt30&quot;});" /><a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-n ui-c"></span></span></a><a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-s ui-c"></span></span></a></span><script id="j_idt30:paniertable:0:j_idt42_s" type="text/javascript">$(function(){PrimeFaces.cw("Spinner","widget_j_idt30_paniertable_0_j_idt42",{id:"j_idt30:paniertable:0:j_idt42",min:1.0});});</script></td>
+				<td role="gridcell" style="width : 10%;">750.0</td>
+				</tr></tbody></table>
+				</div></div>
+				<script id="j_idt30:paniertable_s" type="text/javascript">
+				$(function(){PrimeFaces.cw("DataTable","widget_j_idt30_paniertable",{id:"j_idt30:paniertable",groupColumnIndexes:[],disableContextMenuIfEmpty:false});});</script>
+		
+	
+	
+	
+	
+-->
+
+
+
+</h:body>
+</html>

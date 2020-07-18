@@ -1,0 +1,8 @@
+
+juil. 17, 2020 18:23:24.37 NEW SESSION
+juil. 17, 2020 18:23:24.37 
+juil. 17, 2020 18:23:24.39 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+juil. 17, 2020 18:23:24.40 
+juil. 17, 2020 18:23:24.42 
+juil. 17, 2020 18:23:24.43 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+juil. 17, 2020 18:23:24.45 

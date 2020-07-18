@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.faces.context.FacesContext"/>
+<fullyQualifiedTypeName name="javax.faces.event.ActionEvent"/>
+<fullyQualifiedTypeName name="org.primefaces.model.UploadedFile"/>
+<fullyQualifiedTypeName name="javax.annotation.PostConstruct"/>
+<fullyQualifiedTypeName name="javax.faces.application.Application"/>
+<fullyQualifiedTypeName name="javax.faces.bean.ManagedProperty"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      >
+      
+
+<h:head>
+	<title>la divine boisson</title>
+	
+	<h:outputStylesheet library = "css" name = "style_perso.css"/>
+	
+	<style>
+    	
+        .photo {
+			width: 100%;
+			height: 200px;
+			overflow: hidden;
+			background: url(./resources/images/vin-rouge.webp) no-repeat 0 70%;
+			background-size: cover;
+		}
+		
+			
+     </style>
+     
+     
+     <h:outputScript library = "js" name = "script_perso.js"/>
+</h:head> 
+<h:body onload="#{produitBean.setMenu()}"> 
+
+	
+	
+	
+	
+	
+	<div id="header">
+		 <ui:insert name="header">
+		 	<ui:include src="/templates/header.xhtml" />
+		 </ui:insert> 
+	 </div>
+	
+	 <div id="sidebar">
+		 <ui:insert name="sidebar">
+		 	<ui:include src="/templates/sidebar.xhtml" />
+		 </ui:insert> 
+	 </div>  
+
+	
+
+	
+	<div id="espaceAffichage">
+	
+	<h:form>
+	 <ui:repeat value="#{produitBean.listeVin}" var="bouteille">
+	
+		<h:commandLink action="#{singlebottleBean.naviguerVersSingleBottle(bouteille.idAlcool)}">
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.region.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:commandLink>
+	</ui:repeat>
+	<ui:repeat value="#{produitBean.listeChampagne}" var="bouteille">
+	
+		<h:commandLink action="#{singlebottleBean.naviguerVersSingleBottle(bouteille.idAlcool)}">
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.type.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:commandLink>
+	</ui:repeat>
+	<ui:repeat value="#{produitBean.listeSpiriteux}" var="bouteille">
+	
+		<h:commandLink action="#{singlebottleBean.naviguerVersSingleBottle(bouteille.idAlcool)}">
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.type.nomObjetCat}, #{bouteille.pays.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:commandLink>
+	</ui:repeat>
+	<ui:repeat value="#{produitBean.listeBiere}" var="bouteille">
+	
+		<h:commandLink action="#{singlebottleBean.naviguerVersSingleBottle(bouteille.idAlcool)}">
+		<b:panel class="item">
+		<div class="conteneurphoto">
+		<b:image value="#{bouteille.photo}"  class="photoitem"/>
+		</div>
+		<h4 class="designation">#{bouteille.designation}</h4>
+		<h5 class="categorie">#{bouteille.type.nomObjetCat}, #{bouteille.pays.nomObjetCat}</h5>
+		<p class="prix">#{bouteille.prix} €</p>
+		
+		</b:panel>
+		</h:commandLink>
+	</ui:repeat>
+	</h:form>
+	
+	</div>
+	
+
+</h:body> 
+</html>

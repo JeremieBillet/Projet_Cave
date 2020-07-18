@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\Admin\Documents\07_JSF\Eclipse_Workspace\06_gestion_bibliothèque_jsf_mysql"/>
+		<item value="C:\Users\Admin\Documents\07_JSF\ProjetCave2\Projet_cave"/>
+	</list>
+	<section name="CleanDialogSettings">
+		<item value="828" key="DIALOG_WIDTH"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="480" key="DIALOG_HEIGHT"/>
+		<item value="3906" key="DIALOG_X_ORIGIN"/>
+		<item value="460" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>
