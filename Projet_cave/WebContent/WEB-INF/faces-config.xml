@@ -4,5 +4,164 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
+    
+    
+    <!-- 1. règle de navigation pour la page accueil-gestion.xhtml -->
+	<!-- ================================================= -->
+    <navigation-rule>
+	
+		<!-- 1.1 page de départ -->
+		<from-view-id>/accueil-gestion.xhtml</from-view-id>
+		
+		<!-- 1.2 cas de navigation de accueil-gestion vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.2.1 clé d'outcom -->
+			<from-outcome>categorie</from-outcome>
+			<!-- 1.2.2 destination -->
+			<to-view-id>/gestion-categorie.xhtml</to-view-id>
+			<!-- redirection --> <!-- pour ne pas avoir le retard d'url -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.3 cas de navigation de accueil-gestion vers gestion-produits -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>produit</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/gestion-produit.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.4 cas de navigation de accueil-gestion vers recherche-commande -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>findCommande</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/recherche-commande.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<!-- 2. règle de navigation pour la page gestion-categorie.xhtml -->
+	<!-- ================================================= -->
+	<navigation-rule>
+	
+		<!-- 1.1 page de départ -->
+		<from-view-id>/gestion-categorie.xhtml</from-view-id>
+		
+		<!-- 1.2 cas de navigation de gestion-categorie vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.2.1 clé d'outcom -->
+			<from-outcome>cat</from-outcome>
+			<!-- 1.2.2 destination -->
+			<to-view-id>/gestion-categorie.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.3 cas de navigation de gestion-categorie vers gestion-produits -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>prod</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/gestion-produit.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.4 cas de navigation de gestion-categorie vers recherche-commande -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>findC</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/recherche-commande.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+	
+	</navigation-rule>
+	
+	<!-- . règle de navigation pour la page recherche-commande.xhtml -->
+	<!-- ================================================= -->
+	<navigation-rule>
+	
+		<!-- 1.1 page de départ -->
+		<from-view-id>/recherche-commande.xhtml</from-view-id>
+		
+		<!-- 1.2 cas de navigation de accueil-gestion vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.2.1 clé d'outcom -->
+			<from-outcome>rech</from-outcome>
+			<!-- 1.2.2 destination -->
+			<to-view-id>/recherche-commande.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.3 cas de navigation de recherche-commande vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>rechToCat</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/gestion-categorie.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.4 cas de navigation de recherche-commande vers gestion-produit -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>rechToProd</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/gestion-produit.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+	</navigation-rule>
+		
+	<!-- . règle de navigation pour la page gestion-produit.xhtml -->
+	<!-- ================================================= -->
+	<navigation-rule>
+	
+		<!-- 1.1 page de départ -->
+		<from-view-id>/gestion-produit.xhtml</from-view-id>
+		
+		<!-- 1.2 cas de navigation de accueil-gestion vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.2.1 clé d'outcom -->
+			<from-outcome>product</from-outcome>
+			<!-- 1.2.2 destination -->
+			<to-view-id>/gestion-produit.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.3 cas de navigation de gestion-produit vers gestion-categorie -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>category</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/gestion-categorie.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+		
+		<!-- 1.4 cas de navigation de gestion-produit vers recherche-commande -->
+		<navigation-case>
+			<!--  1.3.1 clé d'outcom -->
+			<from-outcome>search</from-outcome>
+			<!-- 1.3.2 destination -->
+			<to-view-id>/recherche-commande.xhtml</to-view-id>
+			<!-- redirection -->
+			<redirect/>
+		</navigation-case>
+	
+	
+	</navigation-rule>
+    
 
 </faces-config>
