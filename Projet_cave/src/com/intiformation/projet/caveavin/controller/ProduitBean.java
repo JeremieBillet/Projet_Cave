@@ -73,6 +73,7 @@ public class ProduitBean implements Serializable {
 		alcoolDao = new AlcoolDAOImpl();
 		catDao = new CategorieDAOImpl();
 		produitRecherche = "Vin";
+		initFilter();
 		init();
 	}
 
@@ -80,7 +81,7 @@ public class ProduitBean implements Serializable {
 	
 	public void init() {
 		
-		initFilter();
+		
 
 		listeRegionVin = catDao.getByClassNameAndAlcool("catRegion", "Vin");
 		listeTypeVin = catDao.getByClassNameAndAlcool("catType", "Vin");
